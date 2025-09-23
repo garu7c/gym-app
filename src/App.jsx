@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import Home from "./Home";
+import { Training } from "./components/Training";
 
 function Store() {
   return <div className="p-6">🛒 Aquí va la tienda</div>;
@@ -127,7 +128,7 @@ export default function App() {
       <main className="flex-1">
         {activeTab === "home" && <Home darkMode={darkMode} />}
         {activeTab === "store" && <Shop darkMode={darkMode} />}
-        {activeTab === "routines" && <Routines />}
+        {activeTab === "routines" && <Training darkMode={darkMode} />}
         {activeTab === "branches" && <Branches />}
         {activeTab === "help" && <Help />}
       </main>
