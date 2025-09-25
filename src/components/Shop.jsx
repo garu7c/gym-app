@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ImageWithFallback } from './ui/ImageWithFallback';
 import { ShoppingCart, Star, Filter } from 'lucide-react';
 
 /* =====================
@@ -23,7 +23,7 @@ const products = [
 /* =====================
    Componente Store (JSX)
    ===================== */
-export default function Store() {
+export default function Shop() {
   const [cart, setCart] = useState([]); // array de productId
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(6); // cambia esto para mostrar más/menos por página
