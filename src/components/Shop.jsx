@@ -9,16 +9,240 @@ import { ShoppingCart, Star, Filter } from 'lucide-react';
    Datos de productos
    ===================== */
 const products = [
-  { id: 1, name: "Camiseta Gold's Gym Classic", price: 29.99, image: "https://images.unsplash.com/photo-1643622782660-30dedcd8d75a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwY2xvdGhpbmclMjBhcHBhcmVsJTIwd29ya291dCUyMGdlYXJ8ZW58MXx8fHwxNzU4MTQ5MTYzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'clothing', rating: 4.8, reviews: 156, description: "Camiseta de algodón premium con logo clásico de Gold's Gym" },
-  { id: 2, name: "Leggings de Alto Rendimiento", price: 49.99, image: "https://images.unsplash.com/photo-1643622782660-30dedcd8d75a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwY2xvdGhpbmclMjBhcHBhcmVsJTIwd29ya291dCUyMGdlYXJ8ZW58MXx8fHwxNzU4MTQ5MTYzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'clothing', rating: 4.9, reviews: 203, description: "Leggings con tecnología de compresión para máximo rendimiento" },
-  { id: 3, name: "Sudadera con Capucha", price: 69.99, image: "https://images.unsplash.com/photo-1643622782660-30dedcd8d75a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwY2xvdGhpbmclMjBhcHBhcmVsJTIwd29ya291dCUyMGdlYXJ8ZW58MXx8fHwxNzU4MTQ5MTYzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'clothing', rating: 4.7, reviews: 89, description: "Sudadera cómoda perfecta para entrenamientos y uso casual" },
-  { id: 4, name: "Guantes de Entrenamiento Pro", price: 24.99, image: "https://images.unsplash.com/photo-1676312827534-21947df045ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxneW0lMjBhY2Nlc3NvcmllcyUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NTgxNDkxNzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'accessories', rating: 4.6, reviews: 312, description: "Guantes con agarre superior y protección de palma" },
-  { id: 5, name: "Cinturón de Levantamiento", price: 89.99, image: "https://images.unsplash.com/photo-1676312827534-21947df045ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxneW0lMjBhY2Nlc3NvcmllcyUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NTgxNDkxNzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'accessories', rating: 4.9, reviews: 145, description: "Cinturón de cuero genuino para levantamiento de pesas" },
-  { id: 6, name: "Botella de Agua Premium", price: 19.99, image: "https://images.unsplash.com/photo-1676312827534-21947df045ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxneW0lMjBhY2Nlc3NvcmllcyUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NTgxNDkxNzJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'accessories', rating: 4.5, reviews: 78, description: "Botella térmica de acero inoxidable con logo Gold's Gym" },
-  { id: 7, name: "Proteína Whey Premium 2kg", price: 89.99, image: "https://images.unsplash.com/photo-1693996045838-980674653385?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm90ZWluJTIwcG93ZGVyJTIwc3VwcGxlbWVudHMlMjBib3R0bGVzfGVufDF8fHx8MTc1ODA1ODg5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'supplements', rating: 4.8, reviews: 524, description: "Proteína de suero de alta calidad con 25g de proteína por porción" },
-  { id: 8, name: "Creatina Monohidrato 500g", price: 34.99, image: "https://images.unsplash.com/photo-1693996045838-980674653385?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm90ZWluJTIwcG93ZGVyJTIwc3VwcGxlbWVudHMlMjBib3R0bGVzfGVufDF8fHx8MTc1ODA1ODg5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'supplements', rating: 4.7, reviews: 298, description: "Creatina pura para aumentar fuerza y rendimiento" },
-  { id: 9, name: "Pre-Entreno Explosivo", price: 44.99, image: "https://images.unsplash.com/photo-1693996045838-980674653385?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm90ZWluJTIwcG93ZGVyJTIwc3VwcGxlbWVudHMlMjBib3R0bGVzfGVufDF8fHx8MTc1ODA1ODg5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", category: 'supplements', rating: 4.6, reviews: 167, description: "Fórmula avanzada para máxima energía y concentración" }
+  {
+    id: 1, name: "Sudadera con capucha azul real vintage con cremallera y efecto lavado",
+    price: 36600.00,
+    images: 
+    [
+      "https://kontrolledinsanity.com/cdn/shop/files/5L9A6010.png?v=1757786412&width=1080",
+      "https://kontrolledinsanity.com/cdn/shop/files/IMG_3216.jpg?v=1757786412&width=1080",
+      "https://kontrolledinsanity.com/cdn/shop/files/5L9A5974.png?v=1757786412&width=1080",
+      "https://kontrolledinsanity.com/cdn/shop/files/IMG_0161.jpg?v=1757718205&width=1800",
+      "https://kontrolledinsanity.com/cdn/shop/files/IMG_0192.jpg?v=1757718205&width=1800"
+    ],
+    category: 'Sudaderas',
+    tallas: ['S', 'M', 'L', 'XL', 'XXL'],
+    rating: 4.8,
+    reviews: 156,
+    description: "Calidad de archivo, legado moderno. Ponte una prenda que te hará sentir como en casa. Nuestra sudadera con cremallera Vintage Washed está confeccionada con un algodón rígido y pesado, meticulosamente teñido y lavado en prenda para lograr una sensación de comodidad y confort desde el primer uso. No es solo una sudadera con capucha; es un testimonio de durabilidad y estilo atemporal. El clásico parche 'conserje' en el pecho luce con orgullo el nombre de la época dorada, mientras que la espalda luce un bordado impecable de alta densidad del credo de la locura controlada, anclado para siempre en nuestro año de fundación, EST. 2023. Esta es una confección de nivel reliquia, hecha para el presente."
+  },
+  {
+    id: 2,
+    name: "Pantalón corto de sudadera negro vintage lavado (OG)",
+    price: 23300.00,
+    images: 
+    [
+      "https://kontrolledinsanity.com/cdn/shop/files/5L9A5992.png?v=1757720840&width=1800",
+      "https://kontrolledinsanity.com/cdn/shop/files/MAT2285.jpg?v=1758736253&width=1800",
+      "https://kontrolledinsanity.com/cdn/shop/files/MAT2286.jpg?v=1758736305&width=1800"
+    ],
+    category: 'Shorts',
+    tallas: ['S', 'M', 'L', 'XL'], 
+    rating: 4.9, 
+    reviews: 203, 
+    description: "El concepto de comodidad, reinventado. Disfruta de tu tiempo libre con los shorts de algodón Golden Era, donde el diseño minimalista se combina con una calidad excepcional. Fabricados con algodón de primera calidad y alto gramaje, estos shorts ofrecen una sensación de suavidad y confort incomparables, combinando resistencia y una increíble suavidad al tacto. Cada par se somete a un meticuloso proceso de lavado vintage, garantizando una suavidad y comodidad excepcionales desde el primer uso." +
+                  "Su diseño, intencionalmente sencillo y versátil, sirve como lienzo perfecto para el logotipo Golden Era, bordado con precisión y sutileza en la pierna. Ropa casual de alta calidad, diseñada para una comodidad suprema sin renunciar a la elegancia."
+  },
+  { 
+    id: 3, 
+    name: "Camiseta de manga corta Golden Era Desert Cola", 
+    price: 23300.00, 
+    images: 
+    [
+      "https://kontrolledinsanity.com/cdn/shop/files/5L9A6016.png?v=1757786422&width=1800",
+      "https://kontrolledinsanity.com/cdn/shop/files/IMG_1896.jpg?v=1757786422&width=1800"
+    ],
+    category: 'Camisetas', 
+    tallas: ['M', 'L', 'XL', 'XXL'],
+    rating: 4.7, 
+    reviews: 89, 
+    description: "Donde se forja la fuerza. La camiseta Golden Era Ringer está diseñada para quienes entienden que el legado se construye con esfuerzo, no se regala. Fabricada con algodón de alta calidad y grueso, que combina resistencia con una sensación de ligereza y transpirabilidad, es la prenda ideal para tus entrenamientos. El diseño no deja lugar a dudas: un culturista levanta el imponente logotipo de Controlled Insanity, una representación clara de la lucha diaria para superar los límites físicos y mentales. Con el lema «Solo los fuertes sobreviven» y el año de fundación (2023), esta camiseta no solo se usa, sino que representa un logro. Es la expresión de tu dedicación, plasmada en algodón y sudor." 
+  },
+  { 
+    id: 4, 
+    name: "Wrist Wraps", 
+    price: 15000.00, 
+    images: 
+    [
+      "https://www.youngla.com/cdn/shop/files/935_tan_001_01_30_floor.jpg?v=1705617536&width=1800",
+      "https://www.youngla.com/cdn/shop/files/935_tan_002_01_30_floor.jpg?v=1705617537&width=1800",
+      "https://www.youngla.com/cdn/shop/files/01_25_24_Dorian_Belts0869.jpg?v=1706639212&width=1800",
+      "https://www.youngla.com/cdn/shop/files/935_black-and-tan_001_01_30_floor.jpg?v=1706643658&width=1800",
+      "https://www.youngla.com/cdn/shop/files/01_25_24_Dorian_Belts0887.jpg?v=1706643568&width=1800",
+      "https://www.youngla.com/cdn/shop/files/935_olive_002_01_30_floor.jpg?v=1706643568&width=1800",
+      "https://www.youngla.com/cdn/shop/files/935_olive_001_01_30_floor.jpg?v=1706643568&width=1800"
+    ],
+    category: 'Accesorios', 
+    rating: 4.6, 
+    reviews: 312, 
+    description: "Descubre el poder de nuestras muñequeras reforzadas: diseñadas para mejorar tu experiencia de entrenamiento con un soporte inigualable. Disponibles en dos tallas, mediana y grande, estas muñequeras están fabricadas con la máxima precisión para satisfacer tus necesidades específicas." 
+  },
+  { 
+    id: 5, 
+    name: "RDX Cinturón de levantamiento de pesas", 
+    price: 15900.00, 
+    images: 
+    [
+      "https://m.media-amazon.com/images/I/91+ELSOw-qL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/81lmXi+mcAL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/81lmXi+mcAL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/81eIT4IFkhL._AC_SX679_.jpg",
+      "https://m.media-amazon.com/images/I/81XZNXxawbL._AC_SX679_.jpg",
+
+    ],
+    category: 'Accesorios', 
+    rating: 4.9, 
+    reviews: 145, 
+    description: "Cinturón de cuero genuino para levantamiento de pesas" 
+  },
+  { 
+    id: 6, 
+    name: "Botella de Agua Premium (941 - Lah Jug 2.0)", 
+    price: 18000.00, 
+    images: 
+    [
+      "https://www.youngla.com/cdn/shop/files/941_navy-blue_001_11_21_floorV2.jpg?v=1699512838&width=1800",
+      "https://www.youngla.com/cdn/shop/files/941_black_001_11_02_ecomm.jpg?v=1699555974&width=1800",
+      "https://www.youngla.com/cdn/shop/files/941_black-white_006_11_21_floor.jpg?v=1699555841&width=1800",
+      "https://www.youngla.com/cdn/shop/files/941_black-white_001_11_21_floor.jpg?v=1699555841&width=1800",
+      "https://www.youngla.com/cdn/shop/files/941_navy-blue_0014_11_21_floor.jpg?v=1699555841&width=1800",
+      "https://www.youngla.com/cdn/shop/files/941_navy-blue_008_11_21_floor.jpg?v=1699555841&width=1800",
+      "https://www.youngla.com/cdn/shop/files/941_navy-blue_007_11_21_floor.jpg?v=1699555841&width=1800"
+    ],
+    category: 'Accesorios', 
+    rating: 4.5, 
+    reviews: 78, 
+    description: "Sacia tu sed con esta jarra Lah, que incluye dos tipos de boquilla diferentes. Tanto si prefieres beber directamente de la jarra como con pajita, esta jarra tiene todo lo que necesitas. Además, gracias a su correa de transporte, es el accesorio ideal para quienes valoran la comodidad a la hora de mantenerse hidratados, estés donde estés." 
+  },
+  { 
+    id: 7, 
+    name: "Creatina monohidrato con sabor", 
+    price: 13300.00, 
+    images: 
+    [
+      "https://dragonpharmalabs.com/cdn/shop/files/Mockup_-_Creatine_Flavored_-_Cotton_Candy_-_01_426b44b2-4112-4e25-9c92-6f0f21bd3192_720x.png?v=1757342228",
+      "https://dragonpharmalabs.com/cdn/shop/files/Mockup_-_Creatine_Flavored_-_Orange_-_01_8666de23-b6cd-468c-8cf0-a7d5856442c5_720x.png?v=1757342228",
+      "https://dragonpharmalabs.com/cdn/shop/files/Mockup_-_Creatine_Flavored_-_Grape_-_01_720x.png?v=1757342228"
+    ],
+    category: 'Suplementos', 
+    rating: 4.8, 
+    reviews: 524, 
+    description: "El estándar de oro en suplementos de creatina: el monohidrato de creatina. Simple y sumamente eficaz, la creatina es un elemento indispensable en el arsenal de innumerables atletas, y por una buena razón. Ya sea que prefieras la versión sin sabor, la clásica, o le añadas un toque de sabor con una de nuestras creatinas con sabor, la creatina de Dragon Pharma es la mejor opción: sin complicaciones y con una eficacia total." 
+  },
+  { 
+    id: 8, 
+    name: "Proteína WHEYPHORM® - 2Lb", 
+    price: 27500.00, 
+    images: 
+    [
+      "https://dragonpharmalabs.com/cdn/shop/files/Mockup-WheyPhorm-2Lb-BirthdayCake-Pose1_bcc559b4-706d-4800-8b69-20e434a42bcf_720x.png?v=1732523043",
+      "https://dragonpharmalabs.com/cdn/shop/files/RENDERS-600X600-2023_0060_Mockup-Whey-Phorm-2lbs-Dragon-Pharma-Cappuccino-Pose1_720x.png?v=1691497079",
+      "https://dragonpharmalabs.com/cdn/shop/files/RENDERS-600X600-2023_0061_Mockup-Whey-Phorm-2lbs-Dragon-Pharma-Double-Chocolate-Pose1_720x.png?v=1691497079",
+      "https://dragonpharmalabs.com/cdn/shop/files/NFP_-_SFP_-_Wheyphorm_-_Double_Chocolate_Brownie_720x.png?v=1741114564",
+      "https://dragonpharmalabs.com/cdn/shop/files/NFP_-_SFP_-_Wheyphorm_-_Birthday_Cake_720x.png?v=1741114564",
+      "https://dragonpharmalabs.com/cdn/shop/files/NFP_-_SFP_-_Wheyphorm_Cappuccino_720x.png?v=1741114564"
+    ],
+    category: 'Suplementos', 
+    rating: 4.7, 
+    reviews: 298, 
+    description: "WheyPhorm de Dragon Pharma contiene 25 g de proteína de la más alta calidad por porción, ideal para después del entrenamiento o para cubrir tus necesidades diarias de proteínas cuando estás fuera de casa. WheyPhorm está compuesto por dos tipos de proteína: aislado de suero de leche y concentrado de suero de leche. Esta combinación aporta un sabor y una textura excepcionales." 
+  },
+  { 
+    id: 9,
+    name: "Pre-Entreno VENOM INFERNO BRAZO DE 50 LIMÓN", 
+    price: 27500.00, 
+    images: 
+    [
+      "https://dragonpharmalabs.com/cdn/shop/files/600x600-venom-brazo-limon_-_New_720x.png?v=1745857750",
+      "https://dragonpharmalabs.com/cdn/shop/files/600x600-venom-3_720x.png?v=1745857750",
+      "https://dragonpharmalabs.com/cdn/shop/files/600x600-venom-4_720x.png?v=1745857750",
+      "https://dragonpharmalabs.com/cdn/shop/files/NFP_-_SFP_-_Venom_Inferno_720x.png?v=1745857750"
+    ],
+    category: 'Suplementos', 
+    rating: 4.6, 
+    reviews: 167, 
+    description: "Todos compartimos el deseo incesante de realizar una sesión de entrenamiento que nos impulse al límite. Una sesión que no solo estimule el cuerpo, sino que también encienda la mente, donde la concentración absoluta y una energía ilimitada se combinan para sacar lo mejor de ti. Te presentamos VENOM INFERNO®: el pre-entrenamiento más potente jamás creado." 
+  }
 ];
+
+function ProductCarousel({ images = [], alt, grid = false }) {
+  const [current, setCurrent] = useState(0)
+
+  const prevImage = () =>
+    setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+
+  const nextImage = () =>
+    setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+
+  if (!images || images.length === 0) return null
+
+  if (grid) {
+    // 🔹 Modo Grid: muestra todas las imágenes a la vez
+    return (
+      <div className="grid grid-cols-2 gap-2 p-2">
+        {images.map((src, idx) => (
+          <img
+            key={idx}
+            src={src}
+            alt={`${alt} ${idx + 1}`}
+            className="w-full h-32 object-cover rounded-lg border"
+          />
+        ))}
+      </div>
+    )
+  }
+
+  // 🔹 Modo Carrusel con miniaturas
+  return (
+    <div className="relative w-full h-full">
+      {/* Imagen principal */}
+      <img
+        src={images[current]}
+        alt={`${alt} ${current + 1}`}
+        className="w-full h-full object-cover transition-all duration-500 rounded-t-lg"
+      />
+
+      {/* Botón anterior */}
+      {images.length > 1 && (
+        <button
+          onClick={prevImage}
+          className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-1 rounded-full"
+        >
+          ‹
+        </button>
+      )}
+
+      {/* Botón siguiente */}
+      {images.length > 1 && (
+        <button
+          onClick={nextImage}
+          className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-1 rounded-full"
+        >
+          ›
+        </button>
+      )}
+
+      {/* Miniaturas */}
+      {images.length > 1 && (
+        <div className="flex justify-center gap-2 mt-2 p-2">
+          {images.map((src, idx) => (
+            <img
+              key={idx}
+              src={src}
+              alt={`${alt} ${idx + 1}`}
+              onClick={() => setCurrent(idx)}
+              className={`w-12 h-12 object-cover rounded-md border cursor-pointer transition-all duration-300 ${
+                current === idx
+                  ? "ring-2 ring-yellow-500 scale-110"
+                  : "opacity-70 hover:opacity-100"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 /* =====================
    Componente Store (JSX)
@@ -106,11 +330,7 @@ export default function Shop() {
           <Card key={product.id} className="group hover:shadow-lg transition-shadow">
             <CardHeader className="p-0">
               <div className="aspect-square overflow-hidden rounded-t-lg">
-                <ImageWithFallback
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+                <ProductCarousel images={product.images} alt={product.name} />
               </div>
             </CardHeader>
 
@@ -140,7 +360,7 @@ export default function Shop() {
 
                 <div className="flex items-center justify-between pt-2">
                   <div>
-                    <span className="text-2xl font-bold text-yellow-600">${formatPrice(product.price)}</span>
+                    <span className="text-2xl font-bold text-yellow-600">₡{formatPrice(product.price)}</span>
                   </div>
 
                   <Button onClick={() => addToCart(product.id)} className="bg-yellow-500 hover:bg-yellow-600 text-black">
@@ -219,7 +439,7 @@ export default function Shop() {
               <ShoppingCart className="w-8 h-8 text-yellow-500" />
             </div>
             <h3 className="font-semibold mb-2">Envío Gratis</h3>
-            <p className="text-sm text-muted-foreground">Envío gratuito en compras superiores a $75.</p>
+            <p className="text-sm text-muted-foreground">Envío gratuito en compras superiores a ₡50000.</p>
           </div>
 
           <div className="text-center">
