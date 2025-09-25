@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Menu,
   ShoppingCart,
@@ -7,28 +7,24 @@ import {
   HelpCircle,
   Sun,
   Moon,
+  PawPrint,
 } from "lucide-react";
 
 import Home from "./Home";
 import { Training } from "./components/Training";
+import { Branches } from "./components/Branches";
+import Shop from "./components/Shop";
+import Help from "./components/Help";
+import Find from "./components/Find";
 
-function Store() {
-  return <div className="p-6">🛒 Aquí va la tienda</div>;
-}
-function Routines() {
-  return <div className="p-6">💪 Aquí van las rutinas</div>;
-}
-function Branches() {
-  return <div className="p-6">📍 Aquí van las sucursales</div>;
-}
-function Help() {
-  return <div className="p-6">❓ Aquí va la sección de ayuda</div>;
-}
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("home");
-  const [darkMode, setDarkMode] = useState(false);
-
+  const [activeTab, setActiveTab] = useState("home"); 
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    if (saved !== null) return saved === "true";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
   const tabs = [
     { id: "home", label: "Inicio", icon: <Menu className="w-4 h-4" /> },
     { id: "store", label: "Tienda", icon: <ShoppingCart className="w-4 h-4" /> },
@@ -36,6 +32,14 @@ export default function App() {
     { id: "branches", label: "Sucursales", icon: <MapPin className="w-4 h-4" /> },
     { id: "help", label: "Ayuda", icon: <HelpCircle className="w-4 h-4" /> },
   ];
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   return (
     <div 
@@ -57,7 +61,7 @@ export default function App() {
                 darkMode ? "bg-white text-slate-800" : "bg-black text-yellow-500"
               }`}
             >
-              <Dumbbell className='w-6 h-6' />
+              <PawPrint className='w-6 h-6' />
             </div>
             <div>
               <h1 className="text-2xl font-bold">JAGUAR FITNESS</h1>
@@ -129,9 +133,11 @@ export default function App() {
         {activeTab === "home" && <Home darkMode={darkMode} />}
         {activeTab === "store" && <Shop darkMode={darkMode} />}
         {activeTab === "routines" && <Training darkMode={darkMode} />}
-        {activeTab === "branches" && <Branches />}
-        {activeTab === "help" && <Help />}
+        {activeTab === "branches" && <Find darkMode={darkMode} />}
+        {activeTab === "help" && <Help darkMod={darkMode} />}
       </main>
     </div>
   );
+
 }
+

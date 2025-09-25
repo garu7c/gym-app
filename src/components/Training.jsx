@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { Play, Clock, Target, Zap, User } from 'lucide-react';
+import { Play, Clock, Target, Zap, User, Crown, Sparkles, Hammer, BowArrow } from 'lucide-react';
 
 // Pecho
 const chestExercises = [
@@ -264,11 +264,11 @@ const armExercises = [
 
 const muscleGroups = [
     { id: 'all', name: 'Todos', exercises: [...chestExercises, ...backExercises, ...legExercises, ...shoulderExercises, ...armExercises], icon: <Badge className="w-4 h-4" /> },
-    { id: 'chest', name: 'Pecho', exercises: chestExercises, icon: <Target className="w-4 h-4" /> },
-    { id: 'back', name: 'Espalda', exercises: backExercises, icon: <User className="w-4 h-4" /> },
+    { id: 'chest', name: 'Pecho', exercises: chestExercises, icon: <Sparkles className="w-4 h-4" /> },
+    { id: 'back', name: 'Espalda', exercises: backExercises, icon: <Crown className="w-4 h-4" /> },
     { id: 'legs', name: 'Piernas', exercises: legExercises, icon: <Zap className="w-4 h-4" /> },
-    { id: 'shoulders', name: 'Hombros', exercises: shoulderExercises, icon: <Clock className="w-4 h-4" /> },
-    { id: 'arms', name: 'Brazos', exercises: armExercises, icon: <Play className="w-4 h-4" /> },
+    { id: 'shoulders', name: 'Hombros', exercises: shoulderExercises, icon: <Hammer className="w-4 h-4" /> },
+    { id: 'arms', name: 'Brazos', exercises: armExercises, icon: <BowArrow className="w-4 h-4" /> },
 ];
 
 export const Training = ({ darkMode }) => {
@@ -359,7 +359,7 @@ export const Training = ({ darkMode }) => {
                     {/* Exercises Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredExercises.map((exercise) => (
-                            <Card key={exercise.id} className={"hover:shadow-lg transition-shadow"}>
+                            <Card key={exercise.id} className={"hover:shadow-lg dark:hover:shadow-slate-800 transition-shadow dark:bg-slate-900"}>
                                 <CardHeader>
                                     <div className="flex items-start justify-between">
                                         <div className="flex-1">
@@ -375,7 +375,7 @@ export const Training = ({ darkMode }) => {
                                 </CardHeader>
 
                                 <CardContent className="space-y-4">
-                                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                                    <div className="flex items-center justify-between text-sm text-muted-foreground dark:text-gray-100">
                                         <div className="flex items-center space-x-1">
                                             <Clock className="w-4 h-4" />
                                             <span>{exercise.duration}</span>
@@ -389,7 +389,7 @@ export const Training = ({ darkMode }) => {
                                     <Dialog>
                                         <DialogTrigger asChild>
                                             <Button
-                                                className="w-full bg-yellow-500 hover:bg-yellow-600 text-black"
+                                                className="w-full bg-yellow-500 dark:bg-red-800 dark:text-white dark:hover:bg-red-800/50 hover:bg-yellow-600 text-black"
                                                 onClick={() => setSelectedExercise(exercise)}
                                             >
                                                 <Play className="w-4 h-4 mr-2" />
@@ -397,7 +397,7 @@ export const Training = ({ darkMode }) => {
                                             </Button>
                                         </DialogTrigger>
 
-                                        <DialogContent className="sm:max-w-2xl">
+                                        <DialogContent className="sm:max-w-2xl dark:bg-gray-950">
                                             <DialogHeader>
                                                 <DialogTitle className="flex items-center space-x-2">
                                                     <span>{exercise.name}</span>
@@ -410,7 +410,7 @@ export const Training = ({ darkMode }) => {
                                                 </DialogDescription>
                                             </DialogHeader>
 
-                                            <div className="space-y-6">
+                                            <div className="space-y-6 ">
                                                 {/* Video Placeholder */}
                                                 <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
                                                     <div className="text-center">
@@ -432,7 +432,7 @@ export const Training = ({ darkMode }) => {
                                                 {/* Exercise Details */}
                                                 <div className="grid grid-cols-2 gap-4">
                                                     <div className="flex items-center space-x-2">
-                                                        <Clock className="w-4 h-4 text-yellow-500" />
+                                                        <Clock className="w-4 h-4 text-yellow-500 dark:text-red-800" />
                                                         <div>
                                                             <p className="font-semibold">Series</p>
                                                             <p className="text-sm text-muted-foreground">{exercise.duration}</p>
@@ -440,7 +440,7 @@ export const Training = ({ darkMode }) => {
                                                     </div>
 
                                                     <div className="flex items-center space-x-2">
-                                                        <Target className="w-4 h-4 text-yellow-500" />
+                                                        <Target className="w-4 h-4 text-yellow-500 dark:text-red-800" />
                                                         <div>
                                                             <p className="font-semibold">Repeticiones</p>
                                                             <p className="text-sm text-muted-foreground">{exercise.reps}</p>
@@ -451,13 +451,13 @@ export const Training = ({ darkMode }) => {
                                                 {/* Tips */}
                                                 <div>
                                                     <h4 className="font-semibold mb-3 flex items-center">
-                                                        <Zap className="w-4 h-4 text-yellow-500 mr-2" />
+                                                        <Zap className="w-4 h-4 text-yellow-500 dark:text-red-800 mr-2" />
                                                         Consejos de Técnica
                                                     </h4>
-                                                    <ul className="space-y-2">
+                                                    <ul className="space-y-2 ">
                                                         {exercise.tips.map((tip, index) => (
                                                             <li key={index} className="flex items-start space-x-2">
-                                                                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full mt-2 flex-shrink-0" />
+                                                                <div className="w-1.5 h-1.5 bg-yellow-500 dark:bg-red-800 rounded-full mt-2 flex-shrink-0" />
                                                                 <span className="text-sm">{tip}</span>
                                                             </li>
                                                         ))}
@@ -475,12 +475,12 @@ export const Training = ({ darkMode }) => {
             
             {/* Training Tips Section */}
 
-            <section className="bg-muted/30 p-8 rounded-lg">
+            <section className="bg-gray-100 dark:bg-gray-950 p-8 rounded-lg">
                 <h2 className="text-2xl font-bold text-center mb-6">Consejos de Entrenamiento</h2>
                 <div className="grid md:grid-cols-3 gap-6">
                     <div className="text-center">
-                        <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <User className="w-8 h-8 text-yellow-500" />
+                        <div className="w-16 h-16 bg-yellow-500/10 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <User className="w-8 h-8 text-yellow-500 dark:text-red-800" />
                         </div>
                         <h3 className="font-semibold mb-2">Forma Correcta</h3>
                         <p className="text-sm text-muted-foreground">
@@ -489,8 +489,8 @@ export const Training = ({ darkMode }) => {
                     </div>
 
                     <div className="text-center">
-                        <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Target className="w-8 h-8 text-yellow-500" />
+                        <div className="w-16 h-16 bg-yellow-500/10 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Target className="w-8 h-8 text-yellow-500 dark:text-red-800" />
                         </div>
                         <h3 className="font-semibold mb-2">Progresión Gradual</h3>
                         <p className="text-sm text-muted-foreground">
@@ -499,8 +499,8 @@ export const Training = ({ darkMode }) => {
                     </div>
 
                     <div className="text-center">
-                        <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Clock className="w-8 h-8 text-yellow-500" />
+                        <div className="w-16 h-16 bg-yellow-500/10 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Clock className="w-8 h-8 text-yellow-500 dark:text-red-800" />
                         </div>
                         <h3 className="font-semibold mb-2">Descanso Adecuado</h3>
                         <p className="text-sm text-muted-foreground">
@@ -509,6 +509,14 @@ export const Training = ({ darkMode }) => {
                     </div>
                 </div>
             </section>
+            {/* Footer */}
+            <footer
+                className={`py-10 text-center ${
+                darkMode ? "bg-[#0a1229] text-gray-400" : "bg-black text-gray-400"
+                }`}
+            >
+                <p>&copy; 2025 Jaguar Fitness. Todos los derechos reservados.</p>
+            </footer>
         </div>                                      
     );
 };

@@ -4,9 +4,7 @@ import React from "react";
 const Home = ({ darkMode }) => {
   return (
     <div
-      className={`font-sans transition-colors ${
-        darkMode ? "bg-[#010a1c] text-white" : "bg-gray-50 text-gray-900"
-      }`}
+      className="font-sans transition-colors dark:bg-gray-950 dark:text-white bg-gray-100 text-black"
     >
       {/* Hero */}
       <section className="relative h-[80vh] flex items-center justify-center bg-[url('/src/assets/homegym.jpg')] bg-cover bg-center overflow-hidden">
@@ -16,19 +14,12 @@ const Home = ({ darkMode }) => {
             JAGUAR FITNESS
           </h1>
           <p
-            className={`mt-4 text-lg md:text-2xl ${
-              darkMode ? "text-gray-300" : "text-gray-200"
-            }`}
+            className="mt-4 text-lg md:text-2xl dark:text-gray-300 text-gray-200"
           >
             Entrena con calidad
           </p>
           <button
-            className={`mt-6 px-6 py-3 font-bold rounded-lg shadow-lg transition ${
-              darkMode
-                ? "bg-red-800 hover:bg-red-700 text-white"
-                : "bg-yellow-500 hover:bg-yellow-600 text-black"
-            }`}
-          >
+            className="mt-6 px-6 py-3 font-bold rounded-lg shadow-lg transition dark:bg-red-800 dark:hover:bg-red-700 dark:text-white bg-yellow-500 hover:bg-yellow-600 text-black"          >
             ¡Encuentra tu sede!
           </button>
         </div>
@@ -42,9 +33,7 @@ const Home = ({ darkMode }) => {
       <div>
         <h2 className="text-3xl font-bold mb-4">Nuestra Historia</h2>
         <p
-          className={`leading-relaxed ${
-            darkMode ? "text-gray-300" : "text-muted-foreground"
-          }`}
+          className="leading-relaxed dark:text-gray-300 text-muted-foreground"
         >
           Jaguar Fitness nació con la visión de convertirse en más que un gimnasio:
           un espacio donde la disciplina, la fuerza y la comunidad se unieran. Desde
@@ -59,20 +48,16 @@ const Home = ({ darkMode }) => {
 
       {/* Columna derecha - Card + Imagen */}
       <div
-        className={`shadow-md rounded-2xl p-6 flex items-start gap-4 justify-center text-center ${
-          darkMode ? "bg-[#0a1229]" : "bg-white"
-        }`}
+        className="shadow-md rounded-2xl p-6 flex items-start gap-4 justify-center text-center dark:bg-[#0a1229] bg-white"
       >
         <span
-          className={`text-3xl ${
-            darkMode ? "text-red-700" : "text-yellow-500"
-          }`}
+          className="text-3xl dark:text-red-700 text-yellow-500"
         >
           🏅
         </span>
         <div>
           <h3 className="font-bold text-lg">Calidad Comprobada</h3>
-          <p className={`mt-2 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+          <p className="mt-2 dark:text-gray-300 text-gray-600">
             Equipos de última generación y <br /> instalaciones de clase mundial en
             todas nuestras sedes.
           </p>
@@ -81,36 +66,36 @@ const Home = ({ darkMode }) => {
 
     </section>
 
-    <section className={`grid md:grid-cols-3 gap-12 items-center max-w-7xl mx-auto px-4 py-12 ${darkMode ? "bg-slate-900":"bg-[url('src/assets/patron1.png')] rounded-lg"}`}>
+    <section className="grid md:grid-cols-3 gap-12 h-[50vh] items-center w-full px-6 py-4 bg-gray-100 dark:bg-gray-950 rounded-none">
       {/* Card 1 */}
-      <div className={`shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center ${darkMode ? "bg-red-800" : "bg-black"}`}
+      <div className="shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center dark:bg-slate-900 bg-black"
       >
-        <span className={`text-3xl ${darkMode ? "text-slate-900" : "text-yellow-500"}`}><Trophy/></span>
+        <span className="text-3xl dark:text-white text-yellow-500"><Trophy/></span>
         <div>
-          <h3 className="font-bold text-lg text-yellow-500"> Entrenamiento personal</h3>
-          <p className={`mt-2 ${darkMode ? "text-gray-white" : "text-gray-100"}`}>
+          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> Entrenamiento personal</h3>
+          <p className="mt-2 text-gray-200">
             Contamos con los mejores entrenadores certificados para guiarte que te ayudarán a alcanzar tus objetivos con planes especificos.
           </p>
         </div>
       </div>
       {/* Card 2 */}
-      <div className={`shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center ${darkMode ? "bg-red-800" : "bg-black"}`}
+      <div className="shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center dark:bg-slate-900 bg-black"
       >
-        <span className={`text-3xl ${darkMode ? "text-slate-900" : "text-yellow-500"}`}><GroupIcon/></span>
+        <span className="text-3xl dark:text-white text-yellow-500"><GroupIcon/></span>
         <div>
-          <h3 className="font-bold text-lg text-yellow-500"> Clases grupales</h3>
-          <p className={`mt-2 ${darkMode ? "text-gray-white" : "text-gray-100"}`}>
+          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> Clases grupales</h3>
+          <p className="mt-2 text-gray-200">
             Amplia variedad de clases en conjunto para entrenar o complementar tus rutinas de entrenamiento.
           </p>
         </div>
       </div>
       {/* Card 3 */}
-      <div className={`shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center ${darkMode ? "bg-red-800" : "bg-black"}`}
+      <div className="shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center dark:bg-slate-900 bg-black"
       >
-        <span className={`text-3xl ${darkMode ? "text-slate-900" : "text-yellow-500"}`}><Clock/></span>
+        <span className="text-3xl dark:text-white text-yellow-500"><Clock/></span>
         <div>
-          <h3 className="font-bold text-lg text-yellow-500"> Acceso 24/7</h3>
-          <p className={`mt-2 ${darkMode ? "text-gray-white" : "text-gray-100"}`}>
+          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> Acceso 24/7</h3>
+          <p className="mt-2 text-gray-200">
             Acceso a nuestras instalaciones en cualquier momento del día para que puedas entrenar cuando más te convenga.
           </p>
         </div>
