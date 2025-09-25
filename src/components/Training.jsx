@@ -307,9 +307,9 @@ export const Training = ({ darkMode }) => {
 
             {/* Muscle Group Tabs */}
             <Tabs value={selectedMuscle} onValueChange={setSelectedMuscle} className="w-full">
-                <TabsList className="grid w-full grid-cols-6">
+                <TabsList className={`grid w-full grid-cols-6 ${darkMode ? "bg-slate-900":"bg-gray-100"}`}>
                     {muscleGroups.map(group => (
-                        <TabsTrigger key={group.id} value={group.id} className="text-sm">
+                        <TabsTrigger key={group.id} value={group.id} className={`text-sm ${darkMode ? "text-white hover:bg-slate-800":"hover:bg-gray-200"}`}>
                             <span className="mr-1">{group.icon}</span> 
                             {group.name}
                         </TabsTrigger>
@@ -319,39 +319,39 @@ export const Training = ({ darkMode }) => {
                 <div className="mt-8">
                     {/* Exercise Statistics */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                        <Card className="text-center">
+                        <Card className={`text-center ${darkMode ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
                             <CardContent className="pt-6">
-                                <div className="text-2xl font-bold text-yellow-600">
+                                <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                                     {filteredExercises.length}
                                 </div>
                                 <p className="text-sm text-muted-foreground">Ejercicios</p>
                             </CardContent>
                         </Card>
 
-                        <Card className="text-center">
+                        <Card className={`text-center ${darkMode ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
                             <CardContent className="pt-6">
-                                <div className="text-2xl font-bold text-yellow-600">
+                                <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                                     {filteredExercises.filter(e => e.difficulty === 'Principiante').length}
                                 </div>
                                 <p className="text-sm text-muted-foreground">Principiante</p>
                             </CardContent>
                         </Card>
 
-                        <Card className="text-center">
+                        <Card className={`text-center ${darkMode ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
                             <CardContent className="pt-6">
-                                <div className="text-2xl font-bold text-yellow-600">
+                                <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                                     {filteredExercises.filter(e => e.difficulty === 'Intermedio').length}
                                 </div>
                                 <p className="text-sm text-muted-foreground">Intermedio</p>
                             </CardContent>
                         </Card>
 
-                        <Card className="text-center">
+                        <Card className={`text-center ${darkMode ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
                             <CardContent className="pt-6">
-                                <div className="text-2xl font-bold text-yellow-600">
+                                <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                                     {filteredExercises.filter(e => e.difficulty === 'Avanzado').length}
                                 </div>
-                                <p className="text-sm text-muted-foreground">Avanzado</p>
+                                <p className="text-sm text-muted-foreground text-white">Avanzado</p>
                             </CardContent>
                         </Card>
                     </div>
@@ -490,7 +490,7 @@ export const Training = ({ darkMode }) => {
 
                     <div className="text-center">
                         <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Clock className="w-8 h-8 text-yellow-500" />
+                            <Target className="w-8 h-8 text-yellow-500" />
                         </div>
                         <h3 className="font-semibold mb-2">Progresión Gradual</h3>
                         <p className="text-sm text-muted-foreground">
@@ -500,7 +500,7 @@ export const Training = ({ darkMode }) => {
 
                     <div className="text-center">
                         <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Target className="w-8 h-8 text-yellow-500" />
+                            <Clock className="w-8 h-8 text-yellow-500" />
                         </div>
                         <h3 className="font-semibold mb-2">Descanso Adecuado</h3>
                         <p className="text-sm text-muted-foreground">
