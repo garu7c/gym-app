@@ -54,7 +54,7 @@ export default function App() {
           <div className="flex items-center space-x-3">
             <div
               className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                darkMode ? "bg-white text-slate-900" : "bg-black text-yellow-500"
+                darkMode ? "bg-white text-slate-800" : "bg-black text-yellow-500"
               }`}
             >
               <Dumbbell className='w-6 h-6' />

@@ -1,3 +1,4 @@
+import { Award, Clock, Clock1, Grab, GroupIcon, Rocket, Trophy } from "lucide-react";
 import React from "react";
 
 const Home = ({ darkMode }) => {
@@ -57,38 +58,64 @@ const Home = ({ darkMode }) => {
       </div>
 
       {/* Columna derecha - Card + Imagen */}
-      <div className="relative rounded-2xl overflow-hidden shadow-lg">
-        {/* Imagen de fondo */}
-        <img
-          src="/src/assets/patron1.png"
-          alt="Patrón Jaguar Fitness"
-          className="w-full h-64 object-cover"
-        />
-
-        {/* Card encima de la imagen */}
-        <div
-          className={`absolute top-0 left-0 right-0 mx-4 -translate-y-6 shadow-md rounded-2xl p-6 flex items-start gap-4 ${
-            darkMode ? "bg-[#0a1229]" : "bg-white"
+      <div
+        className={`shadow-md rounded-2xl p-6 flex items-start gap-4 justify-center text-center ${
+          darkMode ? "bg-[#0a1229]" : "bg-white"
+        }`}
+      >
+        <span
+          className={`text-3xl ${
+            darkMode ? "text-red-700" : "text-yellow-500"
           }`}
         >
-          <span
-            className={`text-3xl ${
-              darkMode ? "text-red-700" : "text-yellow-500"
-            }`}
-          >
-            🏅
-          </span>
-          <div>
-            <h3 className="font-bold text-lg">Calidad Comprobada</h3>
-            <p className={`mt-2 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-              Equipos de última generación y <br /> instalaciones de clase mundial en
-              todas nuestras sedes.
-            </p>
-          </div>
+          🏅
+        </span>
+        <div>
+          <h3 className="font-bold text-lg">Calidad Comprobada</h3>
+          <p className={`mt-2 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+            Equipos de última generación y <br /> instalaciones de clase mundial en
+            todas nuestras sedes.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section className={`grid md:grid-cols-3 gap-12 items-center max-w-7xl mx-auto px-4 py-12 ${darkMode ? "bg-slate-900":"bg-[url('src/assets/patron1.png')] rounded-lg"}`}>
+      {/* Card 1 */}
+      <div className={`shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center ${darkMode ? "bg-red-800" : "bg-black"}`}
+      >
+        <span className={`text-3xl ${darkMode ? "text-slate-900" : "text-yellow-500"}`}><Trophy/></span>
+        <div>
+          <h3 className="font-bold text-lg text-yellow-500"> Entrenamiento personal</h3>
+          <p className={`mt-2 ${darkMode ? "text-gray-white" : "text-gray-100"}`}>
+            Contamos con los mejores entrenadores certificados para guiarte que te ayudarán a alcanzar tus objetivos con planes especificos.
+          </p>
+        </div>
+      </div>
+      {/* Card 2 */}
+      <div className={`shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center ${darkMode ? "bg-red-800" : "bg-black"}`}
+      >
+        <span className={`text-3xl ${darkMode ? "text-slate-900" : "text-yellow-500"}`}><GroupIcon/></span>
+        <div>
+          <h3 className="font-bold text-lg text-yellow-500"> Clases grupales</h3>
+          <p className={`mt-2 ${darkMode ? "text-gray-white" : "text-gray-100"}`}>
+            Amplia variedad de clases en conjunto para entrenar o complementar tus rutinas de entrenamiento.
+          </p>
+        </div>
+      </div>
+      {/* Card 3 */}
+      <div className={`shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center ${darkMode ? "bg-red-800" : "bg-black"}`}
+      >
+        <span className={`text-3xl ${darkMode ? "text-slate-900" : "text-yellow-500"}`}><Clock/></span>
+        <div>
+          <h3 className="font-bold text-lg text-yellow-500"> Acceso 24/7</h3>
+          <p className={`mt-2 ${darkMode ? "text-gray-white" : "text-gray-100"}`}>
+            Acceso a nuestras instalaciones en cualquier momento del día para que puedas entrenar cuando más te convenga.
+          </p>
         </div>
       </div>
     </section>
-
 
       {/* Footer */}
       <footer
