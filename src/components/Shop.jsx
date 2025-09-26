@@ -281,7 +281,7 @@ export default function Shop() {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold mb-4">Tienda Gold's Gym</h1>
+        <h1 className="text-3xl font-bold mb-4">Tienda Jaguar Fitness</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Encuentra todo lo que necesitas para tu entrenamiento: ropa de alta calidad, accesorios y suplementos.
         </p>
@@ -424,7 +424,7 @@ export default function Shop() {
 
       {/* Sección destacada */}
       <section className="bg-muted/30 p-8 rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">¿Por qué elegir productos Gold's Gym?</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">¿Por qué elegir productos Jaguar Fitness?</h2>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">

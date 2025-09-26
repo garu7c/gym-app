@@ -1,0 +1,32 @@
+{
+  "routes": [
+    {
+      "route": "/",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
+      "route": "/branches",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/find",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/help",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/shop",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/training",
+      "allowedRoles": ["authenticated"]
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/*.css", "/*.js"]
+  }
+}
