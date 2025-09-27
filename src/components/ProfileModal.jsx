@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 
 export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdateImage }) {
-  const [userImage, setUserImage] = useState(null);
+  const [userImage, setUserImage] = useState(() => {
+    return localStorage.getItem("userImage") || null;
+  });
   const username = email?.split("@")[0] || "";
   const fileInputRef = useRef();
 
@@ -28,7 +30,6 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdat
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userImage");
     window.location.href = "/.auth/logout";
   };
 
