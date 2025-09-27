@@ -38,8 +38,8 @@ export default function App() {
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-   useEffect(() => {
+  
+  useEffect(() => {
     if (userImage) {
       localStorage.setItem("userImage", userImage);
     } else {
