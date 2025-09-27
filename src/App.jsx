@@ -100,14 +100,10 @@ export default function App() {
             {user ? (
               <button
                 onClick={() => setIsProfileOpen(true)}
-                className={`px-4 py-2 font-semibold rounded-lg transition ${
-                  darkMode
-                    ? "bg-red-800 hover:bg-red-700 text-white"
-                    : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
-                } flex items-center space-x-2`}
+                className={`px-4 py-2 font-semibold rounded-lg transition ${darkMode ? "bg-red-800 hover:bg-red-700 text-white" : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"} flex items-center space-x-2`}
               >
-                {user.userImage ? (
-                  <img src={user.userImage} alt="Usuario" className="w-6 h-6 rounded-full object-cover"/>
+                {userImage ? (
+                  <img src={userImage} alt="Usuario" className="w-6 h-6 rounded-full object-cover"/>
                 ) : (
                   <div className="w-6 h-6 rounded-full flex items-center justify-center bg-gray-400 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -184,6 +180,7 @@ export default function App() {
         onClose={() => setIsProfileOpen(false)}
         email={user?.userDetails}
         darkMode={darkMode}
+        onUpdateImage={(img) => setUserImage(img)}
       />
     </div>
   );

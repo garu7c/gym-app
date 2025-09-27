@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 
-export default function ProfileModal({ isOpen, onClose, email, darkMode }) {
+export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdateImage }) {
   const [userImage, setUserImage] = useState(null);
-  const username = email ? email.split("@")[0] : "";
+  const username = email?.split("@")[0] || "";
+  const fileInputRef = useRef();
 
   useEffect(() => {
     const savedImage = localStorage.getItem("userImage");
@@ -12,12 +13,18 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode }) {
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
+    if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
       localStorage.setItem("userImage", reader.result);
       setUserImage(reader.result);
+      if (onUpdateImage) onUpdateImage(reader.result); // actualizar en App.jsx
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleAvatarClick = () => {
+    fileInputRef.current.click();
   };
 
   const handleLogout = () => {
@@ -36,21 +43,21 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode }) {
         </button>
 
         {/* Imagen y usuario */}
-        <div className="flex items-center space-x-3 mb-4">
-          {userImage ? (
-            <img src={userImage} alt="Usuario" className="w-10 h-10 rounded-full object-cover"/>
-          ) : (
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${darkMode ? "bg-gray-100 text-gray-900" : "bg-gray-400 text-white"}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <div className="flex flex-col items-center mb-4">
+          <div 
+            className={`w-16 h-16 rounded-full flex items-center justify-center cursor-pointer ${userImage ? '' : darkMode ? "bg-gray-100 text-gray-900" : "bg-gray-400 text-white"}`}
+            onClick={handleAvatarClick}
+          >
+            {userImage ? (
+              <img src={userImage} alt="Usuario" className="w-16 h-16 rounded-full object-cover"/>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
                 <path d="M20 21v-2a4 4 0 0 0-3-3.87M4 21v-2a4 4 0 0 1 3-3.87M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
               </svg>
-            </div>
-          )}
-
-          <div className="flex-1">
-            <p className="font-bold">{username}</p>
-            <input type="file" onChange={handleImageUpload} className="mt-1 text-sm"/>
+            )}
           </div>
+          <p className="font-bold mt-2">{username}</p>
+          <input type="file" ref={fileInputRef} onChange={handleImageUpload} className="hidden"/>
         </div>
 
         {/* Botón Cerrar Sesión */}
