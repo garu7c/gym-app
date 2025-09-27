@@ -33,6 +33,7 @@ export default function App() {
   const { user } = useContext(AuthContext);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [userImage, setUserImage] = useState(localStorage.getItem("userImage") || null);
 
   const tabs = [
     { id: "home", label: "Inicio", icon: <Menu className="w-4 h-4" /> },
