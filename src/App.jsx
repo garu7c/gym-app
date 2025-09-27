@@ -9,14 +9,17 @@ import {
   Moon,
   PawPrint,
 } from "lucide-react";
-
 import Home from "./Home";
 import { Training } from "./components/Training";
 import { Branches } from "./components/Branches";
 import Shop from "./components/Shop";
 import Help from "./components/Help";
 import Find from "./components/Find";
-
+import { PrivateRoute } from "./components/PrivateRoute";
+import { useContext } from "react";
+import { AuthContext } from "./contexts/AuthContexts";
+import LoginButtons from "./components/LoginButtons";
+import LoginModal from "./components/LoginModal";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
@@ -25,6 +28,11 @@ export default function App() {
     if (saved !== null) return saved === "true";
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
+  const { user } = useContext(AuthContext);
+
+  // 👇 estado nuevo para manejar el modal
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
   const tabs = [
     { id: "home", label: "Inicio", icon: <Menu className="w-4 h-4" /> },
     { id: "store", label: "Tienda", icon: <ShoppingCart className="w-4 h-4" /> },
@@ -32,6 +40,7 @@ export default function App() {
     { id: "branches", label: "Sucursales", icon: <MapPin className="w-4 h-4" /> },
     { id: "help", label: "Ayuda", icon: <HelpCircle className="w-4 h-4" /> },
   ];
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -87,15 +96,28 @@ export default function App() {
             </button>
 
             {/* Botón Iniciar Sesión */}
-            <button
-              className={`px-4 py-2 font-semibold rounded-lg transition ${
-                darkMode
-                  ? "bg-red-800 hover:bg-red-700 text-white"
-                  : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black-500"
-              }`}
-            >
-              Iniciar Sesión
-            </button>
+            {user ? (
+              <span
+                className={`px-4 py-2 font-semibold rounded-lg transition ${
+                  darkMode
+                    ? "bg-red-800 hover:bg-red-700 text-white"
+                    : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
+                }`}
+              >
+                Hola {user.userDetails}
+              </span>
+            ) : (
+              <button
+                onClick={() => setIsLoginOpen(true)}  // abre modal
+                className={`px-4 py-2 font-semibold rounded-lg transition ${
+                  darkMode
+                    ? "bg-red-800 hover:bg-red-700 text-white"
+                    : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
+                }`}
+              >
+                Iniciar Sesión
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -131,13 +153,21 @@ export default function App() {
       {/* Contenido dinámico */}
       <main className="flex-1">
         {activeTab === "home" && <Home darkMode={darkMode} />}
-        {activeTab === "store" && <Shop darkMode={darkMode} />}
-        {activeTab === "routines" && <Training darkMode={darkMode} />}
-        {activeTab === "branches" && <Find darkMode={darkMode} />}
-        {activeTab === "help" && <Help darkMod={darkMode} />}
+        {activeTab === "store" &&
+          (user ? <Shop darkMode={darkMode} /> : <p>Debes iniciar sesión</p>)}
+        {activeTab === "routines" &&
+          (user ? <Training darkMode={darkMode} /> : <p>Debes iniciar sesión</p>)}
+        {activeTab === "branches" &&
+          (user ? <Find darkMode={darkMode} /> : <p>Debes iniciar sesión</p>)}
+        {activeTab === "help" && <Help darkMode={darkMode} />}
       </main>
+
+      {/* Modal de login */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        darkMode={darkMode}
+      />
     </div>
   );
-
 }
-
