@@ -18,8 +18,9 @@ import Find from "./components/Find";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContexts";
-import LoginButtons from "./components/LoginButtons";
 import LoginModal from "./components/LoginModal";
+import ProfileModal from "./components/ProfileModal";
+
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
@@ -28,8 +29,11 @@ export default function App() {
     if (saved !== null) return saved === "true";
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
+
   const { user } = useContext(AuthContext);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   const tabs = [
     { id: "home", label: "Inicio", icon: <Menu className="w-4 h-4" /> },
     { id: "store", label: "Tienda", icon: <ShoppingCart className="w-4 h-4" /> },
@@ -94,18 +98,28 @@ export default function App() {
 
             {/* Botón Iniciar Sesión */}
             {user ? (
-              <span
+              <button
+                onClick={() => setIsProfileOpen(true)}
                 className={`px-4 py-2 font-semibold rounded-lg transition ${
                   darkMode
                     ? "bg-red-800 hover:bg-red-700 text-white"
                     : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
-                }`}
+                } flex items-center space-x-2`}
               >
-                {user.userDetails}
-              </span>
+                {user.userImage ? (
+                  <img src={user.userImage} alt="Usuario" className="w-6 h-6 rounded-full object-cover"/>
+                ) : (
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center bg-gray-400 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                      <path d="M20 21v-2a4 4 0 0 0-3-3.87M4 21v-2a4 4 0 0 1 3-3.87M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                    </svg>
+                  </div>
+                )}
+                <span>{user.userDetails.split("@")[0]}</span>
+              </button>
             ) : (
               <button
-                onClick={() => setIsLoginOpen(true)}  // abre modal
+                onClick={() => setIsLoginOpen(true)}
                 className={`px-4 py-2 font-semibold rounded-lg transition ${
                   darkMode
                     ? "bg-red-800 hover:bg-red-700 text-white"
@@ -163,6 +177,12 @@ export default function App() {
       <LoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
+        darkMode={darkMode}
+      />
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        email={user?.userDetails}
         darkMode={darkMode}
       />
     </div>
