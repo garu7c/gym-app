@@ -16,7 +16,7 @@ export const Training = ({ darkMode }) => {
   useEffect(() => {
     const fetchExercises = async () => {
       try {
-        const response = await fetch("https://cla-royaleazure-api.net/api/exercises");
+        const response = await fetch("https://cla-royale.azure-api.net/api/exercises");
         const data = await response.json();
         setExercises(data);
       } catch (error) {
