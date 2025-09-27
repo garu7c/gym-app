@@ -19,7 +19,6 @@ export default function Find() {
     const fetchBranches = async () => {
       try {
         const res = await fetch("https://cla-royale.azure-api.net/branches"); 
-        // 👆 reemplaza la URL con la de tu Function/App Service en Azure
         if (!res.ok) throw new Error("Error al obtener sucursales");
         const data = await res.json();
         setBranches(data);
