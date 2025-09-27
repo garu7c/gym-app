@@ -291,6 +291,35 @@ export default function Shop() {
           </div>
         </>
       )}
+      {/* Sección destacada */}
+      <section className="bg-muted/30 p-8 rounded-lg">
+        <h2 className="text-2xl font-bold text-center mb-6">¿Por qué elegir productos Juaguar Fitness?</h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Star className="w-8 h-8 text-yellow-500" />
+            </div>
+            <h3 className="font-semibold mb-2">Calidad Premium</h3>
+            <p className="text-sm text-muted-foreground">Todos nuestros productos pasan por rigurosos controles de calidad.</p>
+          </div>
+
+          <div className="text-center">
+            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <ShoppingCart className="w-8 h-8 text-yellow-500" />
+            </div>
+            <h3 className="font-semibold mb-2">Envío Gratis</h3>
+            <p className="text-sm text-muted-foreground">Envío gratuito en compras superiores a ₡50000.</p>
+          </div>
+
+          <div className="text-center">
+            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Filter className="w-8 h-8 text-yellow-500" />
+            </div>
+            <h3 className="font-semibold mb-2">Garantía de Satisfacción</h3>
+            <p className="text-sm text-muted-foreground">30 días de garantía en todos nuestros productos.</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
