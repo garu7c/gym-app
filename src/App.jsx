@@ -29,10 +29,7 @@ export default function App() {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
   const { user } = useContext(AuthContext);
-
-  // 👇 estado nuevo para manejar el modal
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-
   const tabs = [
     { id: "home", label: "Inicio", icon: <Menu className="w-4 h-4" /> },
     { id: "store", label: "Tienda", icon: <ShoppingCart className="w-4 h-4" /> },
@@ -104,7 +101,7 @@ export default function App() {
                     : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
                 }`}
               >
-                Hola {user.userDetails}
+                {user.userDetails}
               </span>
             ) : (
               <button
