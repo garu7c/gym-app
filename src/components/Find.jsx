@@ -78,7 +78,16 @@ export default function Find() {
           <p className="text-sm text-muted-foreground mt-2">Sucursales estratégicamente ubicadas para que siempre tengas un Jaguar Gym cerca.</p>
         </div>
         <div>
-          <button className="px-4 py-2 bg-yellow-500 dark:bg-red-800 dark:hover:bg-red-800/80 hover:bg-yellow-600 dark:text-gray-100 text-black rounded-lg">Encontrar la más cercana</button>
+          <button 
+          className="px-4 py-2 bg-yellow-500 dark:bg-red-800 dark:hover:bg-red-800/80 hover:bg-yellow-600 dark:text-gray-100 text-black rounded-lg"
+          onClick={() => {
+            const nearestBranch = filtered[0];
+            if (nearestBranch) {
+              setMapCenter({ lat: nearestBranch.lat, lng: nearestBranch.lng, zoom: 14 });
+            }
+          }}>
+          Encontrar la más cercana
+          </button>
         </div>
       </div>
 
