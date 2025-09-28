@@ -272,7 +272,9 @@ export default function Shop({ darkMode }) {
                     onClick={() => goToPage(num)}
                     className={`px-3 py-1 rounded ${
                       num === page
-                        ? "bg-yellow-600 text-black:bg-red-900 text-white"
+                        ? darkMode
+                          ? "bg-red-800 text-white"
+                          : "bg-yellow-500 text-black"
                         : "bg-transparent"
                     }`}
                   >
