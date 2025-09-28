@@ -1,10 +1,9 @@
 import { Award, Clock, Clock1, Grab, GroupIcon, Rocket, Trophy } from "lucide-react";
 import React from "react";
-import { useNavigate } from "react-router";
-
-const Home = ({ darkMode }) => {
+import { useNavigate } from "react-router-dom";
 const navigate = useNavigate();
 
+const Home = ({ darkMode }) => {
   return (
     <div
       className="font-sans transition-colors dark:bg-gray-950 dark:text-white bg-gray-100 text-black"
@@ -22,7 +21,7 @@ const navigate = useNavigate();
             Entrena con calidad
           </p>
           <button
-            onClick={() => user ? useNavigate("/find") : alert("Debes iniciar sesión")}
+            onClick={() => user ? navigate("/find") : alert("Debes iniciar sesión")}
               className="mt-6 px-6 py-3 font-bold rounded-lg shadow-lg transition 
                         dark:bg-red-800 dark:hover:bg-red-700 dark:text-white 
                         bg-yellow-500 hover:bg-yellow-700 text-black"
