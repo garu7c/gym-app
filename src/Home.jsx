@@ -1,5 +1,6 @@
 import { Award, Clock, Clock1, Grab, GroupIcon, Rocket, Trophy } from "lucide-react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = ({ darkMode }) => {
   return (
@@ -19,8 +20,12 @@ const Home = ({ darkMode }) => {
             Entrena con calidad
           </p>
           <button
-            className="mt-6 px-6 py-3 font-bold rounded-lg shadow-lg transition dark:bg-red-800 dark:hover:bg-red-700 dark:text-white bg-yellow-500 hover:bg-yellow-600 text-black"          >
-            ¡Encuentra tu sede!
+            onClick={() => navigate("/find")}
+              className="mt-6 px-6 py-3 font-bold rounded-lg shadow-lg transition 
+                        dark:bg-red-800 dark:hover:bg-red-700 dark:text-white 
+                        bg-yellow-500 hover:bg-yellow-600 text-black"
+            >
+              ¡Encuentra tu sede!
           </button>
         </div>
       </section>
