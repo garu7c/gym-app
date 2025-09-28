@@ -242,7 +242,7 @@ export default function Shop() {
                       </div>
                       <Button
                         onClick={() => addToCart(product.id)}
-                        className="bg-yellow-500 hover:bg-red-800 text-white"
+                        className={`${darkMode ? "bg-red-800 hover:bg-gray-700 text-white" : "bg-yellow-500 hover:bg-yellow-600 text-black"}`}
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
                         Agregar
