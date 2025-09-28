@@ -6,6 +6,19 @@ function openMaps(address) {
   window.open(url, '_blank');
 }
 
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radio de la Tierra en km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
 export default function Find() {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
@@ -69,8 +82,41 @@ export default function Find() {
           </p>
         </div>
         <div>
-          <button className="px-4 py-2 bg-yellow-500 dark:bg-red-800 dark:hover:bg-red-800/80 hover:bg-yellow-600 dark:text-gray-100 text-black rounded-lg">
-            Encontrar la más cercana
+          <button 
+            onClick={() => {
+              if (!navigator.geolocation) {
+                alert("La geolocalización no está disponible en este navegador.");
+                return;
+              }
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  let nearest = branches[0];
+                  let minDistance = Infinity;
+
+                  branches.forEach(branch => {
+                    const dist = getDistance(
+                      position.coords.latitude,
+                      position.coords.longitude,
+                      branch.lat,
+                      branch.lng
+                    );
+                    if (dist < minDistance) {
+                      minDistance = dist;
+                      nearest = branch;
+                    }
+                  });
+
+                  setMapCenter({ lat: nearest.lat, lng: nearest.lng, zoom: 14 });
+                  alert(`La sucursal más cercana es: ${nearest.name}`);
+                },
+                (error) => {
+                  console.error(error);
+                  alert("No se pudo obtener tu ubicación. Activa el GPS y vuelve a intentar.");
+                }
+              );
+            }}
+            className="px-4 py-2 bg-yellow-500 dark:bg-red-800 dark:hover:bg-red-800/80 hover:bg-yellow-600 dark:text-gray-100 text-black rounded-lg"
+          >
           </button>
         </div>
       </div>
