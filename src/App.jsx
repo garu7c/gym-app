@@ -98,8 +98,8 @@ export default function App() {
               onClick={() => setDarkMode(!darkMode)}
               className={`p-2 rounded-full transition ${
                 darkMode
-                  ? "bg-red-800 hover:bg-red-700"
-                  : "bg-yellow-500 hover:bg-yellow-300 outline-2 outline-black"
+                  ? "bg-red-800 hover:bg-red-700 outline-2 outline-white"
+                  : "bg-yellow-500 hover:bg-yellow-700 outline-2 outline-black"
               }`}
             >
               {darkMode ? (
@@ -115,7 +115,7 @@ export default function App() {
                 onClick={() => setIsProfileOpen(true)}
                 className={`flex items-center space-x-2 px-4 py-2 font-semibold rounded-lg transition ${
                   darkMode
-                    ? "bg-red-800 hover:bg-red-700 text-white"
+                    ? "bg-red-800 border-2 border-white hover:bg-red-700 text-white"
                     : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
                 }`}
               >
@@ -151,7 +151,7 @@ export default function App() {
                 onClick={() => setIsLoginOpen(true)}
                 className={`px-4 py-2 font-semibold rounded-lg transition ${
                   darkMode
-                    ? "bg-red-800 hover:bg-red-700 text-white"
+                    ? "bg-red-800 border-2 border-white hover:bg-red-700 text-white"
                     : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
                 }`}
               >
