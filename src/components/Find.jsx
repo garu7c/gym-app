@@ -107,7 +107,6 @@ export default function Find() {
                   });
 
                   setMapCenter({ lat: nearest.lat, lng: nearest.lng, zoom: 14 });
-                  alert(`La sucursal más cercana es: ${nearest.name}`);
                 },
                 (error) => {
                   console.error(error);
@@ -117,6 +116,7 @@ export default function Find() {
             }}
             className="px-4 py-2 bg-yellow-500 dark:bg-red-800 dark:hover:bg-red-800/80 hover:bg-yellow-600 dark:text-gray-100 text-black rounded-lg"
           >
+            Sucursal más cercana
           </button>
         </div>
       </div>
