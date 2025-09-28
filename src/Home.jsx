@@ -20,7 +20,7 @@ const Home = ({ darkMode }) => {
             Entrena con calidad
           </p>
           <button
-            onClick={() => navigate("/find")}
+            onClick={() => user ? navigate("/find") : alert("Debes iniciar sesión")}
               className="mt-6 px-6 py-3 font-bold rounded-lg shadow-lg transition 
                         dark:bg-red-800 dark:hover:bg-red-700 dark:text-white 
                         bg-yellow-500 hover:bg-yellow-700 text-black"
