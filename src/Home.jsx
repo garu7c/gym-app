@@ -1,6 +1,6 @@
 import { Award, Clock, Clock1, Grab, GroupIcon, Rocket, Trophy } from "lucide-react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const Home = ({ darkMode }) => {
 const navigate = useNavigate();
