@@ -22,7 +22,7 @@ export default function Help({ onClose } = {}) {
       },
       {
         q: "¿Cómo contacto soporte?",
-        a: "Envía un email a soporte@gymapp.example o usa la sección de ayuda dentro de la app."
+        a: "Envía un email a tatoaa372@gmail.com, gcaldera07@gmail.com, tabrock777@gmail.com o usa la sección de ayuda dentro de la app."
       }
     ],
     []
@@ -90,8 +90,8 @@ export default function Help({ onClose } = {}) {
           <Mail className="w-5 h-5 text-sky-600" />
           <div>
             <div className="text-sm text-slate-800 dark:text-slate-100">¿Necesitas más ayuda?</div>
-            <a href="mailto:rte@gymappsopo.example" className="text-sm text-sky-600 hover:underline">
-              soporte@gymapp.example
+            <a href="mailto:tatoaa372@gmail.com" className="text-sm text-sky-600 hover:underline">
+              Soporte
             </a>
           </div>
         </div>
