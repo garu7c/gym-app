@@ -80,7 +80,7 @@ function ProductCarousel({ images = [], alt, grid = false }) {
 /* =====================
    Componente Store
    ===================== */
-export default function Shop() {
+export default function Shop({ darkMode }) {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [page, setPage] = useState(1);
