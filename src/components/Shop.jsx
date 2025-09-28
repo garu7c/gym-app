@@ -236,13 +236,13 @@ export default function Shop() {
 
                     <div className="flex items-center justify-between pt-2">
                       <div>
-                        <span className="text-2xl font-bold text-yellow-600">
+                        <span className="text-2xl font-bold text-yellow-600:text-2xl font-bold text-red-900">
                           ₡{formatPrice(product.price)}
                         </span>
                       </div>
                       <Button
                         onClick={() => addToCart(product.id)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-black"
+                        className="bg-yellow-500 hover:bg-red-800 text-white"
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
                         Agregar
@@ -272,7 +272,7 @@ export default function Shop() {
                     onClick={() => goToPage(num)}
                     className={`px-3 py-1 rounded ${
                       num === page
-                        ? "bg-yellow-600 text-black"
+                        ? "bg-yellow-600 text-black:bg-red-900 text-white"
                         : "bg-transparent"
                     }`}
                   >
@@ -296,24 +296,24 @@ export default function Shop() {
         <h2 className="text-2xl font-bold text-center mb-6">¿Por qué elegir productos Juaguar Fitness?</h2>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="text-center">
-            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Star className="w-8 h-8 text-yellow-500" />
+            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4: w-16 h-16 bg-red-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Star className="w-8 h-8 text-yellow-500: w-8 h-8 text-red-800" />
             </div>
             <h3 className="font-semibold mb-2">Calidad Premium</h3>
             <p className="text-sm text-muted-foreground">Todos nuestros productos pasan por rigurosos controles de calidad.</p>
           </div>
 
           <div className="text-center">
-            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ShoppingCart className="w-8 h-8 text-yellow-500" />
+            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4: w-16 h-16 bg-red-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <ShoppingCart className="w-8 h-8 text-yellow-500: w-8 h-8 text-red-800" />
             </div>
             <h3 className="font-semibold mb-2">Envío Gratis</h3>
             <p className="text-sm text-muted-foreground">Envío gratuito en compras superiores a ₡50000.</p>
           </div>
 
           <div className="text-center">
-            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Filter className="w-8 h-8 text-yellow-500" />
+            <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4: w-16 h-16 bg-red-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Filter className="w-8 h-8 text-yellow-500: w-8 h-8 text-red-800" />
             </div>
             <h3 className="font-semibold mb-2">Garantía de Satisfacción</h3>
             <p className="text-sm text-muted-foreground">30 días de garantía en todos nuestros productos.</p>
