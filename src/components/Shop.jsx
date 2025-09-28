@@ -236,7 +236,7 @@ export default function Shop({ darkMode }) {
 
                     <div className="flex items-center justify-between pt-2">
                       <div>
-                        <span className="text-2xl font-bold text-yellow-600:text-2xl font-bold text-red-900">
+                        <span className={`${darkMode ? "text-2xl font-bold text-red-900" : "text-2xl font-bold text-yellow-600"} `}>
                           ₡{formatPrice(product.price)}
                         </span>
                       </div>
