@@ -73,7 +73,7 @@ export default function App() {
       {/* Header */}
       <header
         className={`shadow-lg ${
-          darkMode ? "bg-red-800 text-white " : "bg-yellow-500 text-black"
+          darkMode ? "bg-red-900 text-white " : "bg-yellow-500 text-black"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center py-4">

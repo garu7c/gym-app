@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { Play, Clock, Target, User, Crown, Sparkles, Hammer, Zap } from 'lucide-react';
+import { Play, Clock, Target, User, Crown, Sparkles, Hammer, Zap, BowArrow } from 'lucide-react';
 
 export const Training = ({ darkMode }) => {
   const [selectedMuscle, setSelectedMuscle] = useState('all');
@@ -60,7 +60,7 @@ export const Training = ({ darkMode }) => {
     { id: 'back', name: 'Espalda', exercises: exercises.back, icon: <Crown className="w-4 h-4" /> },
     { id: 'legs', name: 'Piernas', exercises: exercises.legs, icon: <Zap className="w-4 h-4" /> },
     { id: 'shoulders', name: 'Hombros', exercises: exercises.shoulders, icon: <Hammer className="w-4 h-4" /> },
-    { id: 'arms', name: 'Brazos', exercises: exercises.arms, icon: <User className="w-4 h-4" /> },
+    { id: 'arms', name: 'Brazos', exercises: exercises.arms, icon: <BowArrow className="w-4 h-4" /> },
   ];
 
   const allExercises = muscleGroups.find(m => m.id === 'all').exercises;
