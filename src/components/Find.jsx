@@ -19,7 +19,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-export default function Find() {
+export default function Find({ texts = {} }) {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
   const [branches, setBranches] = useState([]);   // <-- acá guardamos lo que viene del backend
@@ -68,7 +68,7 @@ export default function Find() {
     ? `https://www.openstreetmap.org/export/embed.html?bbox=${mapCenter.lng - 0.5}%2C${mapCenter.lat - 0.5}%2C${mapCenter.lng + 0.5}%2C${mapCenter.lat + 0.5}&layer=mapnik&marker=${mapCenter.lat}%2C${mapCenter.lng}`
     : "";
 
-  if (loading) return <div className="p-6 text-center">Cargando sucursales...</div>;
+  if (loading) return <div className="p-6 text-center">{texts.cargando}</div>;
   if (error) return <div className="p-6 text-center text-red-600">{error}</div>;
 
   return (

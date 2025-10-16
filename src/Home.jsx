@@ -1,7 +1,8 @@
 import { Award, Clock, Clock1, Grab, GroupIcon, Rocket, Trophy } from "lucide-react";
 import React from "react";
 
-const Home = ({ darkMode }) => {
+const Home = ({ darkMode, texts }) => {
+  if (!texts || Object.keys(texts).length === 0) return <p>Cargando...</p>;
   return (
     <div
       className="font-sans transition-colors dark:bg-gray-950 dark:text-white bg-gray-100 text-black"
@@ -11,19 +12,19 @@ const Home = ({ darkMode }) => {
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 text-center px-6">
           <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg">
-            JAGUAR FITNESS
+            {texts.marca}
           </h1>
           <p
             className="mt-4 text-lg md:text-2xl dark:text-gray-300 text-gray-200"
           >
-            Entrena con calidad
+            {texts.phrase1}
           </p>
           <button
               className="mt-6 px-6 py-3 font-bold rounded-lg shadow-lg transition 
                         dark:bg-red-800 dark:hover:bg-red-700 dark:text-white 
                         bg-yellow-500 hover:bg-yellow-700 text-black"
               >
-              ¡Encuentra tu sede!
+              {texts.phrase2}
           </button>
         </div>
       </section>
@@ -34,18 +35,11 @@ const Home = ({ darkMode }) => {
     >
       {/* Columna izquierda - Historia */}
       <div>
-        <h2 className="text-3xl font-bold mb-4">Nuestra Historia</h2>
+        <h2 className="text-3xl font-bold mb-4">{texts.historiaTitulo}</h2>
         <p
           className="leading-relaxed dark:text-gray-300 text-muted-foreground"
         >
-          Jaguar Fitness nació con la visión de convertirse en más que un gimnasio:
-          un espacio donde la disciplina, la fuerza y la comunidad se unieran. Desde
-          sus inicios, inspirados en la energía y la majestuosidad del jaguar, el
-          centro ha buscado motivar a cada persona a superar sus límites y alcanzar
-          sus metas de bienestar. Con un enfoque en la innovación y el acompañamiento
-          personalizado, Jaguar Fitness ha crecido hasta consolidarse como un lugar
-          de referencia para quienes buscan transformar su cuerpo y su mente, siempre
-          en un ambiente de respeto, motivación y constancia.
+          {texts.historia}
         </p>
       </div>
 
@@ -59,10 +53,9 @@ const Home = ({ darkMode }) => {
           🏅
         </span>
         <div>
-          <h3 className="font-bold text-lg">Calidad Comprobada</h3>
+          <h3 className="font-bold text-lg">{texts.tarjeta1Titulo}</h3>
           <p className="mt-2 dark:text-gray-300 text-gray-600">
-            Equipos de última generación y <br /> instalaciones de clase mundial en
-            todas nuestras sedes.
+            {texts.tarjeta1Texto}
           </p>
         </div>
       </div>
@@ -75,9 +68,9 @@ const Home = ({ darkMode }) => {
       >
         <span className="text-3xl dark:text-white text-yellow-500"><Trophy/></span>
         <div>
-          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> Entrenamiento personal</h3>
+          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> {texts.tarjeta2Titulo}</h3>
           <p className="mt-2 text-gray-200">
-            Contamos con los mejores entrenadores certificados para guiarte que te ayudarán a alcanzar tus objetivos con planes especificos.
+            {texts.tarjeta2Texto}
           </p>
         </div>
       </div>
@@ -86,9 +79,9 @@ const Home = ({ darkMode }) => {
       >
         <span className="text-3xl dark:text-white text-yellow-500"><GroupIcon/></span>
         <div>
-          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> Clases grupales</h3>
+          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> {texts.tarjeta3Titulo}</h3>
           <p className="mt-2 text-gray-200">
-            Amplia variedad de clases en conjunto para entrenar o complementar tus rutinas de entrenamiento.
+            {texts.tarjeta3Texto}
           </p>
         </div>
       </div>
@@ -97,9 +90,9 @@ const Home = ({ darkMode }) => {
       >
         <span className="text-3xl dark:text-white text-yellow-500"><Clock/></span>
         <div>
-          <h3 className="font-bold text-lg text-yellow-500 dark:text-white"> Acceso 24/7</h3>
+          <h3 className="font-bold text-lg text-yellow-500 dark:text-white">{texts.tarjeta4Titulo}</h3>
           <p className="mt-2 text-gray-200">
-            Acceso a nuestras instalaciones en cualquier momento del día para que puedas entrenar cuando más te convenga.
+            {texts.tarjeta4Texto}
           </p>
         </div>
       </div>
@@ -111,7 +104,7 @@ const Home = ({ darkMode }) => {
           darkMode ? "bg-[#0a1229] text-gray-400" : "bg-black text-gray-400"
         }`}
       >
-        <p>&copy; 2025 Jaguar Fitness. Todos los derechos reservados.</p>
+        <p>&copy; {texts.footer}</p>
       </footer>
     </div>
   );

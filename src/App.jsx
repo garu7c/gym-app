@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   Menu,
+  Home as HomeIcon,
   ShoppingCart,
   Dumbbell,
   MapPin,
@@ -36,9 +37,34 @@ export default function App() {
     return localStorage.getItem("userImage") || null;
   });
 
+  const [texts, setTexts] = useState({});
+  const [lang, setLang] = useState("es");
+  const currentTexts = texts[lang] || {};
+
+  // App.jsx - CORRECTION
+  useEffect(() => {
+    fetch("/texts.json")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        // PASO CRUCIAL: Usar res.json() para parsear la respuesta
+        return res.json(); 
+      })
+      .then(data => {
+        // Almacenar el JSON completo en el estado 'texts'
+        setTexts(data); 
+        console.log("Textos cargados correctamente.");
+      })
+      .catch(error => {
+        console.error("Error al cargar o parsear texts.json:", error);
+      });
+  }, []); // El array de dependencias vacío indica que se ejecuta solo al montar el componente
+
+
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
+  
    useEffect(() => {
     if (userImage) {
       localStorage.setItem("userImage", userImage);
@@ -46,13 +72,13 @@ export default function App() {
       localStorage.removeItem("userImage");
     }
   }, [userImage]);
-
+//Cambiar los label con los textos del JSON
   const tabs = [
-    { id: "home", label: "Inicio", icon: <Menu className="w-4 h-4" /> },
-    { id: "store", label: "Tienda", icon: <ShoppingCart className="w-4 h-4" /> },
-    { id: "routines", label: "Rutinas", icon: <Dumbbell className="w-4 h-4" /> },
-    { id: "branches", label: "Sucursales", icon: <MapPin className="w-4 h-4" /> },
-    { id: "help", label: "Ayuda", icon: <HelpCircle className="w-4 h-4" /> },
+    { id: "home", label: currentTexts.inicio , icon: <HomeIcon className="w-4 h-4" /> },
+    { id: "store", label: currentTexts.tienda, icon: <ShoppingCart className="w-4 h-4" /> },
+    { id: "routines", label: currentTexts.rutinas, icon: <Dumbbell className="w-4 h-4" /> },
+    { id: "branches", label: currentTexts.sucursales, icon: <MapPin className="w-4 h-4" /> },
+    { id: "help", label: currentTexts.ayuda, icon: <HelpCircle className="w-4 h-4" /> },
   ];
 
   useEffect(() => {
@@ -87,7 +113,7 @@ export default function App() {
               <PawPrint className='w-6 h-6' />
             </div>
             <div>
-              <h1 className="text-2xl font-bold">JAGUAR FITNESS</h1>
+              <h1 className="text-2xl font-bold">{currentTexts.marca}</h1>
             </div>
           </div>
 
@@ -155,7 +181,7 @@ export default function App() {
                     : "bg-yellow-500 border-2 border-black hover:bg-yellow-700 text-black"
                 }`}
               >
-                Iniciar Sesión
+                {currentTexts.login}
               </button>
             )}
           </div>
@@ -192,13 +218,13 @@ export default function App() {
 
       {/* Contenido dinámico */}
       <main className="flex-1">
-        {activeTab === "home" && <Home darkMode={darkMode} />}
+        {activeTab === "home" && <Home darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "store" &&
-          (user ? <Shop darkMode={darkMode} /> : (alert(`Debes iniciar sesión`), <p>Debes iniciar sesión</p>))}
+          (user ? <Shop darkMode={darkMode} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
         {activeTab === "routines" &&
-          (user ? <Training darkMode={darkMode} /> : (alert(`Debes iniciar sesión`), <p>Debes iniciar sesión</p>))}
+          (user ? <Training darkMode={darkMode} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
         {activeTab === "branches" &&
-          (user ? <Find darkMode={darkMode} /> : (alert(`Debes iniciar sesión`), <p>Debes iniciar sesión</p>))}
+          (user ? <Find darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
         {activeTab === "help" && <Help darkMode={darkMode} />}
       </main>
 
