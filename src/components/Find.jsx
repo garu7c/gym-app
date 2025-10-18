@@ -124,7 +124,7 @@ export default function Find({ texts = {} }) {
       {/* mapa */}
       {mapCenter && (
         <div className="bg-white dark:bg-slate-900 rounded-lg p-6 mb-8 border border-gray-200 dark:border-slate-700">
-          <h2 className="font-semibold mb-3 text-slate-900 dark:text-white">{mapTitle}</h2>
+          <h2 className="font-semibold mb-3 text-slate-900 dark:text-white">{texts.mapTitle}</h2>
           <div className="rounded-md h-64 overflow-hidden border">
             <iframe
               title="mapa-sucursales"
