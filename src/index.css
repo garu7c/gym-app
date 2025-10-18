@@ -118,4 +118,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Make interactive controls use pointer cursor for better affordance */
+  button,
+  [role="button"] {
+    @apply cursor-pointer;
+  }
 }
