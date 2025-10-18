@@ -300,7 +300,7 @@ export default function Shop({ darkMode, texts }) {
             <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4: w-16 h-16 bg-red-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Star className="w-8 h-8 text-yellow-500: w-8 h-8 text-red-800" />
             </div>
-            <h3 className="font-semibold mb-2">{strC1title}</h3>
+            <h3 className="font-semibold mb-2">{texts.strC1title}</h3>
             <p className="text-sm text-muted-foreground">{texts.strC1Text}</p>
           </div>
 
