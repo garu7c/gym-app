@@ -21,7 +21,18 @@
     "tarjeta4Titulo": "Acceso 24/7",
     "tarjeta4Texto": "Acceso a nuestras instalaciones en cualquier momento del día para que puedas entrenar cuando más te convenga.",
     "footer": "2025 Jaguar Fitness. Todos los derechos reservados.",
-    "cargando" : "Cargando..."
+    "cargando" : "Cargando...",
+    "sucursalesTitulo" : "Nuestras Sucursales",
+    "sucusalesTexto" : "Sucursales estratégicamente ubicadas para que siempre tengas un Jaguar Gym cerca.",
+    "gpsAlert": "No se pudo obtener tu ubicación. Por favor, habilita el acceso a la ubicación en tu dispositivo.",
+    "geoAlert" : "La geolocalizacion no esta disponible en este navegador",
+    "nearlyGym" : "Sucursal mas cercana",
+    "mapTitle" : "Mapa de Sucursales",
+    "mapClick" : "Haz clic en 'Ver mapa' en una sucursal para centrar el mapa en ella",
+    "busquedaFind" : "Buscar sucursal, direccion o servicio",
+    "allServices": "Todos los servicios",
+    "dispServices": "Servicios disponibles:",
+    "comoLlegar": "Cómo llegar"
   },
   "en": {
     "marca": "JAGUAR FITNESS",

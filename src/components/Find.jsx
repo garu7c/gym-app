@@ -76,16 +76,16 @@ export default function Find({ texts = {} }) {
       {/* encabezado */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold">Nuestras Sucursales</h1>
+          <h1 className="text-3xl font-bold">{texts.sucursalesTitulos}</h1>
           <p className="text-sm text-muted-foreground mt-2">
-            Sucursales estratégicamente ubicadas para que siempre tengas un Jaguar Gym cerca.
+            {texts.sucusalesTexto}
           </p>
         </div>
         <div>
           <button 
             onClick={() => {
               if (!navigator.geolocation) {
-                alert("La geolocalización no está disponible en este navegador.");
+                alert(texts.geoAlert);
                 return;
               }
               navigator.geolocation.getCurrentPosition(
@@ -110,13 +110,13 @@ export default function Find({ texts = {} }) {
                 },
                 (error) => {
                   console.error(error);
-                  alert("No se pudo obtener tu ubicación. Activa el GPS y vuelve a intentar.");
+                  alert(texts.gpsAlert);
                 }
               );
             }}
             className="px-4 py-2 bg-yellow-500 dark:bg-red-800 dark:hover:bg-red-800/80 hover:bg-yellow-600 dark:text-gray-100 text-black rounded-lg"
           >
-            Sucursal más cercana
+            {texts.nearlyGym}
           </button>
         </div>
       </div>
@@ -124,7 +124,7 @@ export default function Find({ texts = {} }) {
       {/* mapa */}
       {mapCenter && (
         <div className="bg-white dark:bg-slate-900 rounded-lg p-6 mb-8 border border-gray-200 dark:border-slate-700">
-          <h2 className="font-semibold mb-3 text-slate-900 dark:text-white">Mapa de Sucursales</h2>
+          <h2 className="font-semibold mb-3 text-slate-900 dark:text-white">{mapTitle}</h2>
           <div className="rounded-md h-64 overflow-hidden border">
             <iframe
               title="mapa-sucursales"
@@ -134,7 +134,7 @@ export default function Find({ texts = {} }) {
             />
           </div>
           <div className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-            Haz clic en "Ver en mapa" en una sucursal para centrar el mapa en ella. 
+            {texts.mapClick} 
           </div>
         </div>
       )}
@@ -145,7 +145,7 @@ export default function Find({ texts = {} }) {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Buscar sucursal, dirección o servicio..."
+            placeholder={texts.busquedaFind}
             className="w-full rounded border px-3 py-2 text-slate-900 dark:text-white bg-white dark:bg-slate-800"
           />
         </div>
@@ -155,7 +155,7 @@ export default function Find({ texts = {} }) {
             onChange={(e) => setFilter(e.target.value)} 
             className="p-2 rounded border text-slate-900 dark:text-white bg-white dark:bg-slate-800"
           >
-            <option value="all">Todos los servicios</option>
+            <option value="all">{texts.allServices}</option>
             {services.map(s => (
               <option key={s} value={s}>{s}</option>
             ))}
@@ -187,7 +187,7 @@ export default function Find({ texts = {} }) {
               </div>
 
               <div>
-                <div className="text-sm mb-2">Servicios disponibles:</div>
+                <div className="text-sm mb-2">{texts.dispServices}</div>
                 <div className="flex gap-2 flex-wrap">
                   {branch.services.map(s => (
                     <span key={s} className="text-xs bg-gray-100 dark:bg-black/40 text-slate-700 dark:text-slate-200 px-2 py-1 rounded">
@@ -207,7 +207,7 @@ export default function Find({ texts = {} }) {
                   onClick={() => openMaps(branch.address)} 
                   className="flex-1 mt-2 bg-yellow-600 dark:bg-red-800 dark:text-gray-100 dark:hover-red-800/80 hover:bg-yellow-700 text-black px-4 py-2 rounded flex items-center justify-center gap-2"
                 >
-                  <Truck className="w-4 h-4" /> Cómo llegar
+                  <Truck className="w-4 h-4" /> {texts.comoLlegar}
                 </button>
               </div>
             </div>
@@ -217,7 +217,7 @@ export default function Find({ texts = {} }) {
 
       <footer className="py-10">
         <div className="mt-12 text-center text-sm text-slate-500 dark:text-slate-400">
-          &copy; {new Date().getFullYear()} Jaguar Fitness. Todos los derechos reservados.
+          &copy; {new Date().getFullYear()} {texts.footer}
         </div>
       </footer>
     </div>
