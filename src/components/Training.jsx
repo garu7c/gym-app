@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { Play, Clock, Target, User, Crown, Sparkles, Hammer, Zap, BowArrow } from 'lucide-react';
 
-export const Training = ({ darkMode }) => {
+export const Training = ({ darkMode, texts }) => {
   const [selectedMuscle, setSelectedMuscle] = useState('all');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [exercises, setExercises] = useState({
@@ -82,17 +82,16 @@ export const Training = ({ darkMode }) => {
   };
 
   if (loading) {
-    return <div className="p-6 text-center">Cargando ejercicios...</div>;
+    return <div className="p-6 text-center">{texts.cargando}</div>;
   }
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Rutinas de Entrenamiento</h1>
+        <h1 className="text-3xl font-bold">{texts.rtnTitle}</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Descubre nuestra biblioteca completa de ejercicios organizados por grupo muscular. 
-          Cada ejercicio incluye video instructivo y consejos profesionales.
+          {texts.rtnText}
         </p>
       </div>
 
@@ -115,7 +114,7 @@ export const Training = ({ darkMode }) => {
                 <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                   {filteredExercises.length}
                 </div>
-                <p className="text-sm text-muted-foreground">Ejercicios</p>
+                <p className="text-sm text-muted-foreground">{texts.ejs}</p>
               </CardContent>
             </Card>
             <Card className={`text-center ${darkMode ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
@@ -123,7 +122,7 @@ export const Training = ({ darkMode }) => {
                 <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                   {filteredExercises.filter(e => e.difficulty === 'Principiante').length}
                 </div>
-                <p className="text-sm text-muted-foreground">Principiante</p>
+                <p className="text-sm text-muted-foreground">{texts.prncpt}</p>
               </CardContent>
             </Card>
             <Card className={`text-center ${darkMode ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
@@ -131,7 +130,7 @@ export const Training = ({ darkMode }) => {
                 <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                   {filteredExercises.filter(e => e.difficulty === 'Intermedio').length}
                 </div>
-                <p className="text-sm text-muted-foreground">Intermedio</p>
+                <p className="text-sm text-muted-foreground">{texts.intmd}</p>
               </CardContent>
             </Card>
             <Card className={`text-center ${darkMode ? "bg-slate-900 text-white" : "bg-white text-black"}`}>
@@ -139,7 +138,7 @@ export const Training = ({ darkMode }) => {
                 <div className={`text-2xl font-bold ${darkMode ? "text-red-800" : "text-yellow-600"}`}>
                   {filteredExercises.filter(e => e.difficulty === 'Avanzado').length}
                 </div>
-                <p className="text-sm text-muted-foreground">Avanzado</p>
+                <p className="text-sm text-muted-foreground">{texts.advnc}</p>
               </CardContent>
             </Card>
           </div>
@@ -197,14 +196,14 @@ export const Training = ({ darkMode }) => {
                         <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
                           <div className="text-center">
                             <Play className="w-16 h-16 text-muted-foreground mx-auto mb-2" />
-                            <p className="text-muted-foreground">Video instructivo disponible</p>
+                            <p className="text-muted-foreground">{texts.vdInstr}</p>
                             <Button
                               variant="outline"
                               size="sm"
                               className="mt-2"
                               onClick={() => window.open(exercise.videoUrl, '_blank')}
                             >
-                              Ver en YouTube
+                              {texts.vrYt}
                             </Button>
                           </div>
                         </div>
@@ -212,7 +211,7 @@ export const Training = ({ darkMode }) => {
                         <div>
                           <h4 className="font-semibold mb-3 flex items-center">
                             <Zap className="w-4 h-4 text-yellow-500 dark:text-red-800 mr-2" />
-                            Consejos de Técnica
+                            {texts.cnsjTec}
                           </h4>
                           <ul className="space-y-2 ">
                             {exercise.tips?.map((tip, index) => (
@@ -235,33 +234,33 @@ export const Training = ({ darkMode }) => {
 
       {/* Training Tips Section (sin cambios) */}
       <section className="bg-gray-100 dark:bg-gray-950 p-8 rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Consejos de Entrenamiento</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">{cnsjEntr}</h2>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <User className="w-8 h-8 text-yellow-500 dark:text-red-800" />
             </div>
-            <h3 className="font-semibold mb-2">Forma Correcta</h3>
+            <h3 className="font-semibold mb-2">{texts.r1Title}</h3>
             <p className="text-sm text-muted-foreground">
-              La técnica correcta es más importante que el peso. Siempre prioriza las forma sobre la cantidad.
+              {texts.r1Text}
             </p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <Target className="w-8 h-8 text-yellow-500 dark:text-red-800" />
             </div>
-            <h3 className="font-semibold mb-2">Progresión Gradual</h3>
+            <h3 className="font-semibold mb-2">{texts.r2Title}</h3>
             <p className="text-sm text-muted-foreground">
-              Aumenta la intensidad gradualmente. El progreso sostenible es la clave del éxito a largo plazo.
+              {texts.r2Text}
             </p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <Clock className="w-8 h-8 text-yellow-500 dark:text-red-800" />
             </div>
-            <h3 className="font-semibold mb-2">Descanso Adecuado</h3>
+            <h3 className="font-semibold mb-2">{texts.r3Title}</h3>
             <p className="text-sm text-muted-foreground">
-              Dale tiempo a tus músculos para recuperarse. El descanso es cuando realmente crecen.
+              {texts.r3Text}
             </p>
           </div>
         </div>
@@ -273,7 +272,7 @@ export const Training = ({ darkMode }) => {
           darkMode ? "bg-[#0a1229] text-gray-400" : "bg-black text-gray-400"
         }`}
       >
-        <p>&copy; 2025 Jaguar Fitness. Todos los derechos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} {texts.footer}</p>
       </footer>
     </div>
   );
