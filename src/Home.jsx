@@ -104,7 +104,7 @@ const Home = ({ darkMode, texts }) => {
           darkMode ? "bg-[#0a1229] text-gray-400" : "bg-black text-gray-400"
         }`}
       >
-        <p>&copy; {texts.footer}</p>
+        <p>&copy;{new Date().getFullYear()} {texts.footer}</p>
       </footer>
     </div>
   );
