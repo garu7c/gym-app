@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { Play, Clock, Target, User, Crown, Sparkles, Hammer, Zap, BowArrow } from 'lucide-react';
 
-export const Training = ({ darkMode, texts }) => {
+export const Training = ({ darkMode, texts = {} }) => {
   const [selectedMuscle, setSelectedMuscle] = useState('all');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [exercises, setExercises] = useState({
@@ -82,7 +82,7 @@ export const Training = ({ darkMode, texts }) => {
   };
 
   if (loading) {
-    return <div className="p-6 text-center">{texts.cargando}</div>;
+    return <div className="p-6 text-center">{texts.cargando || 'Cargando...'}</div>;
   }
 
   return (
@@ -91,7 +91,7 @@ export const Training = ({ darkMode, texts }) => {
       <div className="text-center">
         <h1 className="text-3xl font-bold">{texts.rtnTitle}</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          {texts.rtnText}
+          {texts.rtnText || 'Explora nuestras rutinas y aprende la técnica correcta.'}
         </p>
       </div>
 
@@ -234,7 +234,7 @@ export const Training = ({ darkMode, texts }) => {
 
       {/* Training Tips Section (sin cambios) */}
       <section className="bg-gray-100 dark:bg-gray-950 p-8 rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">{cnsjEntr}</h2>
+  <h2 className="text-2xl font-bold text-center mb-6">{texts.cnsjEntr || 'Consejos de Entrenamiento'}</h2>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">

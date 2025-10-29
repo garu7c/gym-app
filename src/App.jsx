@@ -225,7 +225,7 @@ export default function App() {
           (user ? <Training darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
         {activeTab === "branches" &&
           (user ? <Find darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
-        {activeTab === "help" && <Help darkMode={darkMode} ctexs={currentTexts} />}
+        {activeTab === "help" && <Help darkMode={darkMode} texts={currentTexts} />}
       </main>
 
       {/* Modal de login */}
@@ -239,8 +239,8 @@ export default function App() {
         onClose={() => setIsProfileOpen(false)}
         email={user?.userDetails}
         darkMode={darkMode}
-        userImage={userImage}        
-        onUpdateImage={setUserImage}  
+        userImage={userImage}
+        onUpdateImage={setUserImage}
       />
     </div>
   );
