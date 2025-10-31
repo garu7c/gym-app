@@ -80,7 +80,7 @@ function ProductCarousel({ images = [], alt, grid = false }) {
 /* =====================
    Componente Store
    ===================== */
-export default function Shop({ darkMode }) {
+export default function Shop({ darkMode, texts }) {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [page, setPage] = useState(1);
@@ -96,7 +96,7 @@ export default function Shop({ darkMode }) {
         setError(null);
 
         const res = await fetch("https://cla-royale.azure-api.net/jf/store"); 
-        if (!res.ok) throw new Error("Error al cargar productos");
+        if (!res.ok) throw new Error(texts.errCrg);
         const data = await res.json();
         setProducts(data);
       } catch (err) {
@@ -132,18 +132,17 @@ export default function Shop({ darkMode }) {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold mb-4">Tienda Jaguar Fitness</h1>
+        <h1 className="text-3xl font-bold mb-4">{texts.strTitle}</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Encuentra todo lo que necesitas para tu entrenamiento: ropa de alta
-          calidad, accesorios y suplementos.
+          {texts.strText}
         </p>
       </div>
 
       {/* Estado de carga / error */}
-      {loading && <p className="text-center">Cargando productos...</p>}
+      {loading && <p className="text-center">{texts.cargando}</p>}
       {error && (
         <p className="text-center text-red-600">
-          No se pudieron cargar los productos: {error}
+          {texts.errCrg}: {error}
         </p>
       )}
 
@@ -161,20 +160,20 @@ export default function Shop({ darkMode }) {
                   </span>
                 </div>
               ) : (
-                <div className="text-sm text-muted-foreground">Carrito vacío</div>
+                <div className="text-sm text-muted-foreground">{texts.emptyCart}</div>
               )}
             </div>
 
             <div className="flex items-center space-x-4">
               <div className="text-sm text-muted-foreground">
-                Mostrando{" "}
+                {texts.showinng}{" "}
                 <strong>{(page - 1) * pageSize + 1}</strong> -{" "}
-                <strong>{Math.min(page * pageSize, totalItems)}</strong> de{" "}
+                <strong>{Math.min(page * pageSize, totalItems)}</strong> {texts.of}{" "}
                 <strong>{totalItems}</strong>
               </div>
 
               <div className="flex items-center space-x-2">
-                <label className="text-sm">Por página:</label>
+                <label className="text-sm">{texts.xpag}</label>
                 <select
                   value={pageSize}
                   onChange={(e) => {
@@ -245,7 +244,7 @@ export default function Shop({ darkMode }) {
                         className={`${darkMode ? "bg-red-800 hover:bg-gray-700 text-white" : "bg-yellow-500 hover:bg-yellow-600 text-black"}`}
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
-                        Agregar
+                        {texts.addCart}
                       </Button>
                     </div>
                   </div>
@@ -261,7 +260,7 @@ export default function Shop({ darkMode }) {
               disabled={page <= 1}
               variant="ghost"
             >
-              Anterior
+              {texts.ant}
             </Button>
             <div className="inline-flex items-center space-x-1">
               {Array.from({ length: totalPages }).map((_, idx) => {
@@ -288,37 +287,37 @@ export default function Shop({ darkMode }) {
               disabled={page >= totalPages}
               variant="ghost"
             >
-              Siguiente
+              {texts.sig}
             </Button>
           </div>
         </>
       )}
       {/* Sección destacada */}
       <section className="bg-muted/30 p-8 rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">¿Por qué elegir productos Juaguar Fitness?</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">{texts.strCardsTitle}</h2>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4: w-16 h-16 bg-red-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Star className="w-8 h-8 text-yellow-500: w-8 h-8 text-red-800" />
             </div>
-            <h3 className="font-semibold mb-2">Calidad Premium</h3>
-            <p className="text-sm text-muted-foreground">Todos nuestros productos pasan por rigurosos controles de calidad.</p>
+            <h3 className="font-semibold mb-2">{texts.strC1title}</h3>
+            <p className="text-sm text-muted-foreground">{texts.strC1Text}</p>
           </div>
 
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4: w-16 h-16 bg-red-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <ShoppingCart className="w-8 h-8 text-yellow-500: w-8 h-8 text-red-800" />
             </div>
-            <h3 className="font-semibold mb-2">Envío Gratis</h3>
-            <p className="text-sm text-muted-foreground">Envío gratuito en compras superiores a ₡50000.</p>
+            <h3 className="font-semibold mb-2">{texts.strC2title}</h3>
+            <p className="text-sm text-muted-foreground">{texts.strC2Text}</p>
           </div>
 
           <div className="text-center">
             <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4: w-16 h-16 bg-red-800/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Filter className="w-8 h-8 text-yellow-500: w-8 h-8 text-red-800" />
             </div>
-            <h3 className="font-semibold mb-2">Garantía de Satisfacción</h3>
-            <p className="text-sm text-muted-foreground">30 días de garantía en todos nuestros productos.</p>
+            <h3 className="font-semibold mb-2">{texts.strC3title}</h3>
+            <p className="text-sm text-muted-foreground">{texts.strC3Text}</p>
           </div>
         </div>
       </section>
