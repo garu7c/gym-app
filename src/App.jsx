@@ -102,7 +102,7 @@ export default function App() {
           darkMode ? "bg-red-900 text-white " : "bg-yellow-500 text-black"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center py-4">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-center py-4">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <div
@@ -118,7 +118,7 @@ export default function App() {
           </div>
 
           {/* Controles */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 mt-3 md:mt-0">
             {/* Botón de modo oscuro/claro */}
             <button
               onClick={() => setDarkMode(!darkMode)}
