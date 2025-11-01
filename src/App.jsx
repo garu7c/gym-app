@@ -194,12 +194,12 @@ export default function App() {
           darkMode ? "border-gray-950 bg-gray-950" : " border-gray-200/50 bg-gray-200/50"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 flex space-x-2 justify-center">
+        <div className="max-w-7xl mx-auto px-4 flex space-x-2 justify-center overflow-x-auto scrollbar-hide py-2">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-6 py-3 transition rounded-xl ${
+              className={`flex items-center whitespace-nowrap space-x-2 px-6 py-3 ... ${
                 activeTab === tab.id
                   ? darkMode
                     ? "bg-red-900 text-white"
