@@ -199,7 +199,7 @@ export default function App() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center whitespace-nowrap space-x-2 px-6 py-3 ... ${
+              className={`flex items-center whitespace-nowrap space-x-2 px-5 py-3 ${
                 activeTab === tab.id
                   ? darkMode
                     ? "bg-red-900 text-white"

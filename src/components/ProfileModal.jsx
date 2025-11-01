@@ -37,7 +37,7 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdat
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
-      <div className={`relative w-80 p-6 rounded-2xl shadow-xl transition-colors ${darkMode ? "bg-gray-900 text-white" : "bg-yellow-500 text-black"}`}>
+      <div className={`relative w-full max-w-xs md:max-w-md p-6 rounded-2xl shadow-xl transition-colors ${darkMode ? "bg-gray-900 text-white" : "bg-yellow-500 text-black"}`}>
         {/* Cerrar */}
         <button onClick={onClose} className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
           <X className="w-5 h-5" />
