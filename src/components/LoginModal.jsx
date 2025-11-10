@@ -1,8 +1,8 @@
 import { X, Github, Chrome } from "lucide-react";
 
 const API_BASE_URL = "https://jf-api-prod-user-asfrcja6fnhsh9ec.eastus2-01.azurewebsites.net"; 
-const GOOGLE_LOGIN_URL = `${API_BASE_URL}/signin-google`;
-const GITHUB_LOGIN_URL = `${API_BASE_URL}/signin-github`;
+const GOOGLE_LOGIN_URL = `${API_BASE_URL}/api/auth/login/google`;
+const GITHUB_LOGIN_URL = `${API_BASE_URL}/api/auth/login/github`;
 
 export default function LoginModal({ isOpen, onClose, darkMode }) {
   if (!isOpen) return null;
