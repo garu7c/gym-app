@@ -9,7 +9,7 @@ import {
   Moon,
   PawPrint,
 } from "lucide-react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import { Training } from "./components/Training";
 import Shop from "./components/Shop";
@@ -20,6 +20,7 @@ import { AuthContext } from "./contexts/AuthContexts";
 import LoginModal from "./components/LoginModal";
 import ProfileModal from "./components/ProfileModal";
 import AuthSuccess from "./components/AuthSuccess";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 
 export default function App() {
