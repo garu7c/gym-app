@@ -1,5 +1,9 @@
 import { X, Github, Chrome } from "lucide-react";
 
+const API_BASE_URL = "https://jf-api-prod-user-asfrcja6fnhsh9ec.eastus2-01.azurewebsites.net"; 
+const GOOGLE_LOGIN_URL = `${API_BASE_URL}/api/auth/login/google`;
+const GITHUB_LOGIN_URL = `${API_BASE_URL}/api/auth/login/github`;
+
 export default function LoginModal({ isOpen, onClose, darkMode }) {
   if (!isOpen) return null;
 
@@ -52,7 +56,8 @@ export default function LoginModal({ isOpen, onClose, darkMode }) {
         {/* Botones */}
         <div className="flex flex-col space-y-3">
           <button
-            onClick={() => (window.location.href = "/.auth/login/github")}
+
+            onClick={() => (window.location.href = GITHUB_LOGIN_URL)}
             className={`flex items-center justify-center w-full px-4 py-2 rounded-lg font-semibold shadow 
               ${darkMode ? "bg-red-800 hover:bg-gray-700" : "bg-gray-100 hover:bg-gray-300"}
             `}
@@ -62,7 +67,7 @@ export default function LoginModal({ isOpen, onClose, darkMode }) {
           </button>
 
           <button
-            onClick={() => (window.location.href = "/.auth/login/google")}
+            onClick={() => (window.location.href = GOOGLE_LOGIN_URL)}
             className={`flex items-center justify-center w-full px-4 py-2 rounded-lg font-semibold shadow 
               ${darkMode ? "bg-red-800 hover:bg-gray-700" : "bg-gray-100 hover:bg-gray-300 text-black"}
             `}

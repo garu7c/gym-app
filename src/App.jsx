@@ -1,6 +1,5 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Menu,
   Home as HomeIcon,
   ShoppingCart,
   Dumbbell,
@@ -12,15 +11,14 @@ import {
 } from "lucide-react";
 import Home from "./Home";
 import { Training } from "./components/Training";
-import { Branches } from "./components/Branches";
 import Shop from "./components/Shop";
 import Help from "./components/Help";
 import Find from "./components/Find";
-import { PrivateRoute } from "./components/PrivateRoute";
 import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContexts";
 import LoginModal from "./components/LoginModal";
 import ProfileModal from "./components/ProfileModal";
+import AuthSuccess from "./components/AuthSuccess";
 
 
 export default function App() {
@@ -65,7 +63,7 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   
-   useEffect(() => {
+  useEffect(() => {
     if (userImage) {
       localStorage.setItem("userImage", userImage);
     } else {
@@ -218,14 +216,26 @@ export default function App() {
 
       {/* Contenido dinámico */}
       <main className="flex-1">
-        {activeTab === "home" && <Home darkMode={darkMode} texts={currentTexts} />}
-        {activeTab === "store" &&
-          (user ? <Shop darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
-        {activeTab === "routines" &&
-          (user ? <Training darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
-        {activeTab === "branches" &&
-          (user ? <Find darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
-        {activeTab === "help" && <Help darkMode={darkMode} texts={currentTexts} />}
+        <Routes>
+          {/* Ruta principal (Home) - Usaremos el 'activeTab' para el renderizado interno si quieres */}
+          <Route path="/" element={<Home darkMode={darkMode} texts={currentTexts} />} />
+          
+          {/* RUTA DE CALLBACK - Usa el nuevo componente */}
+          <Route path="/auth-success" element={<AuthSuccess />} /> 
+
+          {/* RUTA DE TIENDA */}
+          <Route path="/store" element={<PrivateRoute><Shop darkMode={darkMode} texts={currentTexts} /></PrivateRoute>} />
+
+          {/* RUTA DE RUTINAS */}
+          <Route path="/routines" element={<PrivateRoute><Training darkMode={darkMode} texts={currentTexts} /></PrivateRoute>} />
+          
+          {/* RUTA DE SUCURSALES */}
+          <Route path="/branches" element={<PrivateRoute><Find darkMode={darkMode} texts={currentTexts} /></PrivateRoute>} />
+          
+          {/* RUTA DE AYUDA */}
+          <Route path="/help" element={<Help darkMode={darkMode} texts={currentTexts} />} />
+
+        </Routes>
       </main>
 
       {/* Modal de login */}
