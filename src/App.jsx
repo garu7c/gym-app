@@ -9,6 +9,7 @@ import {
   Moon,
   PawPrint,
 } from "lucide-react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./Home";
 import { Training } from "./components/Training";
 import Shop from "./components/Shop";
