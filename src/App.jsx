@@ -220,11 +220,11 @@ export default function App() {
       <main className="flex-1">
         {activeTab === "home" && <Home darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "store" &&
-          (user ? <Shop darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
+          <Shop darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "routines" &&
           (user ? <Training darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
         {activeTab === "branches" &&
-          (user ? <Find darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
+          <Find darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "help" && <Help darkMode={darkMode} texts={currentTexts} />}
       </main>
 
