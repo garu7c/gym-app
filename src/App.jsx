@@ -1,6 +1,5 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Menu,
   Home as HomeIcon,
   ShoppingCart,
   Dumbbell,
@@ -10,17 +9,18 @@ import {
   Moon,
   PawPrint,
 } from "lucide-react";
+import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import { Training } from "./components/Training";
-import { Branches } from "./components/Branches";
 import Shop from "./components/Shop";
 import Help from "./components/Help";
 import Find from "./components/Find";
-import { PrivateRoute } from "./components/PrivateRoute";
 import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContexts";
 import LoginModal from "./components/LoginModal";
 import ProfileModal from "./components/ProfileModal";
+import AuthSuccess from "./components/AuthSuccess";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 
 export default function App() {
@@ -65,7 +65,7 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   
-   useEffect(() => {
+  useEffect(() => {
     if (userImage) {
       localStorage.setItem("userImage", userImage);
     } else {
