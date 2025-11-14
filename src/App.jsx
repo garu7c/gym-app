@@ -102,7 +102,7 @@ export default function App() {
           darkMode ? "bg-red-900 text-white " : "bg-yellow-500 text-black"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center py-4">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-center py-4">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <div
@@ -118,7 +118,7 @@ export default function App() {
           </div>
 
           {/* Controles */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 mt-3 md:mt-0">
             {/* Botón de modo oscuro/claro */}
             <button
               onClick={() => setDarkMode(!darkMode)}
@@ -194,12 +194,12 @@ export default function App() {
           darkMode ? "border-gray-950 bg-gray-950" : " border-gray-200/50 bg-gray-200/50"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 flex space-x-2 justify-center">
+        <div className="max-w-7xl mx-auto px-4 flex space-x-2 justify-center overflow-x-auto scrollbar-hide py-2">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-6 py-3 transition rounded-xl ${
+              className={`flex items-center whitespace-nowrap space-x-2 px-5 py-3 ${
                 activeTab === tab.id
                   ? darkMode
                     ? "bg-red-900 text-white"
@@ -218,26 +218,14 @@ export default function App() {
 
       {/* Contenido dinámico */}
       <main className="flex-1">
-        <Routes>
-          {/* Ruta principal (Home) - Usaremos el 'activeTab' para el renderizado interno si quieres */}
-          <Route path="/" element={<Home darkMode={darkMode} texts={currentTexts} />} />
-          
-          {/* RUTA DE CALLBACK - Usa el nuevo componente */}
-          <Route path="/auth-success" element={<AuthSuccess />} /> 
-
-          {/* RUTA DE TIENDA */}
-          <Route path="/store" element={<PrivateRoute><Shop darkMode={darkMode} texts={currentTexts} /></PrivateRoute>} />
-
-          {/* RUTA DE RUTINAS */}
-          <Route path="/routines" element={<PrivateRoute><Training darkMode={darkMode} texts={currentTexts} /></PrivateRoute>} />
-          
-          {/* RUTA DE SUCURSALES */}
-          <Route path="/branches" element={<PrivateRoute><Find darkMode={darkMode} texts={currentTexts} /></PrivateRoute>} />
-          
-          {/* RUTA DE AYUDA */}
-          <Route path="/help" element={<Help darkMode={darkMode} texts={currentTexts} />} />
-
-        </Routes>
+        {activeTab === "home" && <Home darkMode={darkMode} texts={currentTexts} />}
+        {activeTab === "store" &&
+          <Shop darkMode={darkMode} texts={currentTexts} />}
+        {activeTab === "routines" &&
+          (user ? <Training darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
+        {activeTab === "branches" &&
+          <Find darkMode={darkMode} texts={currentTexts} />}
+        {activeTab === "help" && <Help darkMode={darkMode} texts={currentTexts} />}
       </main>
 
       {/* Modal de login */}

@@ -10,7 +10,7 @@ export default function LoginModal({ isOpen, onClose, darkMode }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
       <div
-        className={`relative w-80 p-6 rounded-2xl shadow-xl transition-colors
+        className={`relative w-full max-w-xs md:max-w-md p-6 rounded-2xl shadow-xl transition-colors
           ${darkMode ? "bg-gray-900 text-white" : "bg-yellow-500 text-black"}
         `}
       >

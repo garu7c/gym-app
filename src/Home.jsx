@@ -8,10 +8,10 @@ const Home = ({ darkMode, texts }) => {
       className="font-sans transition-colors dark:bg-gray-950 dark:text-white bg-gray-100 text-black"
     >
       {/* Hero */}
-      <section className="relative h-[80vh] flex items-center justify-center bg-[url('/src/assets/homegym.jpg')] bg-cover bg-center overflow-hidden">
+      <section className="relative h-[60vh] md:h-[80vh] flex items-center justify-center bg-[url('/src/assets/homegym.jpg')] bg-cover bg-center overflow-hidden">
         <div className="absolute inset-0 bg-black/60"></div>
-        <div className="relative z-10 text-center px-6">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-3xl">
+          <h1 className="text-2xl sm:text-3xl md:text-6xl font-extrabold text-white drop-shadow-lg">
             {texts.marca}
           </h1>
           <p
@@ -62,7 +62,7 @@ const Home = ({ darkMode, texts }) => {
 
     </section>
 
-    <section className="grid md:grid-cols-3 gap-12 h-[50vh] items-center w-full px-6 py-4 bg-gray-100 dark:bg-gray-950 rounded-none">
+  <section className="grid md:grid-cols-3 gap-6 items-center w-full px-4 py-8 md:py-12 bg-gray-100 dark:bg-gray-950 rounded-none">
       {/* Card 1 */}
       <div className="shadow-md rounded-2xl p-6 flex items-start gap-6 justify-center text-center dark:bg-slate-900 bg-black"
       >
