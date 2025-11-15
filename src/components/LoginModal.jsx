@@ -1,7 +1,7 @@
 import { X, Github, Chrome } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "../contexts/AuthContexts";
-import { useContext } from { "name": "data_analysis", "path": "/usr/bin/python3" }
+import { useContext } from "react"; 
 
 const API_URL = "https://cla-royale.azure-api.net/api/auth/exchange/google";
 
