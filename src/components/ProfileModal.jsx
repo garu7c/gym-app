@@ -1,11 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { X } from "lucide-react";
+import { AuthContext } from "../contexts/AuthContexts";
 
 export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdateImage }) {
   const [userImage, setUserImage] = useState(() => {
     return localStorage.getItem("userImage") || null;
   });
-  const username = email?.split("@")[0] || "";
+  const { user, logout } = useContext(AuthContext);
+  const username = user?.email?.split("@")[0] || "Usuario";
   const fileInputRef = useRef();
 
   useEffect(() => {
@@ -30,7 +32,8 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdat
   };
 
   const handleLogout = () => {
-    window.location.href = "/.auth/logout";
+    logout();
+    onClose();
   };
 
   if (!isOpen) return null;

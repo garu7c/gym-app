@@ -1,6 +1,51 @@
 import { X, Github, Chrome } from "lucide-react";
+import { useGoogleLogin } from "@react-oauth/google";
+import { AuthContext } from "../contexts/AuthContexts";
+import { useContext } from { "name": "data_analysis", "path": "/usr/bin/python3" }
+
+const API_URL = "https://cla-royale.azure-api.net/api/auth/exchange/google";
 
 export default function LoginModal({ isOpen, onClose, darkMode }) {
+
+  const { login } = useContext(AuthContext);
+
+  const sendCodeToBackend = async (code) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ code: code })
+      });
+
+      if (!response.ok) {
+        throw new Error("Falló el intercambio del código con el backend");
+      }
+
+      const data = await response.json();
+
+      if (data.token) {
+        login(data.token);
+        onClose();
+      } else {
+        throw new Error("El backend no devolvió un token");
+      }
+    } catch (error) {
+      console.error("Error en sendCodeToBackend:", error);
+    }
+  };
+
+  const handleGoogleLogin = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: (codeResponse) => {
+      sendCodeToBackend(codeResponse.code);
+    },
+    onError: (errorResponse) => {
+      console.error("Error de Google login:", errorResponse);
+    },
+  });
+
   if (!isOpen) return null;
 
   return (
@@ -62,7 +107,7 @@ export default function LoginModal({ isOpen, onClose, darkMode }) {
           </button>
 
           <button
-            onClick={() => (window.location.href = "/.auth/login/google")}
+            onClick={() => handleGoogleLogin()}
             className={`flex items-center justify-center w-full px-4 py-2 rounded-lg font-semibold shadow 
               ${darkMode ? "bg-red-800 hover:bg-gray-700" : "bg-gray-100 hover:bg-gray-300 text-black"}
             `}

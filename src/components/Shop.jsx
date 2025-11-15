@@ -5,8 +5,8 @@ import { Badge } from "./ui/badge";
 import { ShoppingCart, Star, Filter } from "lucide-react";
 
 /* =====================
-   Componente Carrusel
-   ===================== */
+  Componente Carrusel
+  ===================== */
 function ProductCarousel({ images = [], alt, grid = false }) {
   const [current, setCurrent] = useState(0);
 
@@ -78,8 +78,8 @@ function ProductCarousel({ images = [], alt, grid = false }) {
 }
 
 /* =====================
-   Componente Store
-   ===================== */
+  Componente Store
+  ===================== */
 export default function Shop({ darkMode, texts }) {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
@@ -95,7 +95,7 @@ export default function Shop({ darkMode, texts }) {
         setLoading(true);
         setError(null);
 
-        const res = await fetch("https://cla-royale.azure-api.net/jf/store"); 
+        const res = await fetch("https://cla-royale.azure-api.net/api/productos"); 
         if (!res.ok) throw new Error(texts.errCrg);
         const data = await res.json();
         setProducts(data);
