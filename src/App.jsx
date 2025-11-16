@@ -209,6 +209,20 @@ export default function App() {
               <span>{tab.label}</span>
             </button>
           ))}
+
+          {user && user.role === 'Admin' && (
+            <button
+              onClick={() => setActiveTab('admin')}
+              className={`flex items-center whitespace-nowrap space-x-2 px-5 py-3 ${
+                activeTab === 'admin'
+                  ? darkMode ? "bg-red-900 text-white" : "bg-black text-white"
+                  : darkMode ? "hover:bg-red-900/50 text-white-200" : "hover:bg-gray-300 text-gray-700"
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="w-4 h-4"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 8a2 2 0 1 0-4 0 2 2 0 0 0 4 0m-2-1a1 1 0 1 1 0-2 1 1 0 0 1 0 2m6 1.5a2.5 2.5 0 0 0-2.5-2.5h-7A2.5 2.5 0 0 0 1 12.5V13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.5zM11 12.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-3-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/></svg>
+              <span>Admin</span>
+            </button>
+          )}
         </div>
       </nav>
 
@@ -218,10 +232,23 @@ export default function App() {
         {activeTab === "store" &&
           <Shop darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "routines" &&
-          (user ? <Training darkMode={darkMode} texts={currentTexts} /> : (alert(`Debes iniciar sesión`), <p>{currentTexts.loginWarning}</p>))}
+        (user ? (
+          <Training darkMode={darkMode} texts={currentTexts} />
+        ) : (
+          // Usamos una función autoejecutable para hacer dos cosas:
+          (() => {
+            // 1. Abrir el modal de login si no está abierto ya
+            if (!isLoginOpen) setIsLoginOpen(true);
+
+            // 2. Mostrar el componente 'Home' en el área de contenido
+            //    en lugar del texto feo.
+            return <Home darkMode={darkMode} texts={currentTexts} />;
+          })()
+        ))}
         {activeTab === "branches" &&
           <Find darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "help" && <Help darkMode={darkMode} texts={currentTexts} />}
+        {activeTab === "admin" && <AdminPanel darkMode={darkMode} />}
       </main>
 
       {/* Modal de login */}
