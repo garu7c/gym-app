@@ -20,6 +20,7 @@ import { AuthContext } from "./contexts/AuthContexts";
 import LoginModal from "./components/LoginModal";
 import ProfileModal from "./components/ProfileModal";
 import { CartModal } from "./components/CartModal";
+import { useCart } from "./contexts/CartContext";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
