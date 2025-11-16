@@ -1,29 +1,36 @@
-// src/components/AdminPanel.jsx
+// src/components/AdminPanel.jsx (ACTUALIZADO CON 'EDITAR')
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContexts'; // Importa tu contexto
-import { Button } from './ui/button'; // Reusa tus componentes de UI
+import { AuthContext } from '../contexts/AuthContexts';
+import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Edit } from 'lucide-react'; // Importar ícono de Editar
 
-const API_URL = "https://cla-royale.azure-api.net/api/productos"; // La URL base de tu API
+const API_URL = "https://cla-royale.azure-api.net/api/productos";
 
 export const AdminPanel = ({ darkMode }) => {
-    const { token } = useContext(AuthContext); // Obtenemos el token JWT del contexto
+    const { token } = useContext(AuthContext);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // Estados para el formulario de nuevo producto
-    const [nombre, setNombre] = useState('');
-    const [descripcion, setDescripcion] = useState('');
-    const [precio, setPrecio] = useState(0);
-    const [category, setCategory] = useState('General');
-    const [stock, setStock] = useState(100);
-    const [imageUrl1, setImageUrl1] = useState('');
+    // --- NUEVO ESTADO ---
+    const [editingId, setEditingId] = useState(null); // null = Modo Crear, (numero) = Modo Editar
 
-    // Función para cargar los productos
+    // Estados para el formulario
+    const [formState, setFormState] = useState({
+        nombre: '',
+        descripcion: '',
+        precio: 0,
+        category: 'General',
+        stock: 100,
+        imageUrl1: '',
+        imageUrl2: '',
+        imageUrl3: '',
+        rating: 4.5, // Añadimos todos los campos del modelo
+        reviews: 0
+    });
+
     const fetchProducts = async () => {
         try {
-        // El GET no necesita token porque es público
         const res = await fetch(API_URL);
         const data = await res.json();
         setProducts(data);
@@ -32,178 +39,192 @@ export const AdminPanel = ({ darkMode }) => {
         }
     };
 
-    // Cargar productos al montar el componente
     useEffect(() => {
         fetchProducts();
     }, []);
 
-    // --- FUNCIÓN DE BORRADO (DELETE) ---
+    // --- NUEVA FUNCIÓN: Cargar datos para editar ---
+    const handleEditClick = (product) => {
+        setEditingId(product.id); // Pone el formulario en "Modo Editar"
+        // Rellena el formulario con los datos del producto
+        setFormState({
+        nombre: product.nombre,
+        descripcion: product.descripcion,
+        precio: product.precio,
+        category: product.category,
+        stock: product.stock,
+        imageUrl1: product.imageUrl1 || '',
+        imageUrl2: product.imageUrl2 || '',
+        imageUrl3: product.imageUrl3 || '',
+        rating: product.rating,
+        reviews: product.reviews
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" }); // Sube al formulario
+    };
+
+    // --- NUEVA FUNCIÓN: Cancelar Edición ---
+    const cancelEdit = () => {
+        setEditingId(null); // Vuelve a "Modo Crear"
+        // Limpia el formulario
+        setFormState({
+        nombre: '', descripcion: '', precio: 0, category: 'General',
+        stock: 100, imageUrl1: '', imageUrl2: '', imageUrl3: '',
+        rating: 4.5, reviews: 0
+        });
+    };
+
+    // --- FUNCIÓN DE BORRADO (Sin cambios) ---
     const handleDelete = async (id) => {
-        if (!window.confirm(`¿Seguro que quieres borrar el producto ${id}?`)) {
-        return;
-        }
-        
+        if (!window.confirm(`¿Seguro que quieres borrar el producto ${id}?`)) return;
         setLoading(true);
         try {
         const response = await fetch(`${API_URL}/${id}`, {
             method: 'DELETE',
-            headers: {
-            // ¡CRUCIAL! Esto le dice al backend que eres un Admin
-            'Authorization': `Bearer ${token}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-
-        if (!response.ok) {
-            throw new Error('No se pudo borrar el producto. ¿Tienes permisos de Admin?');
-        }
-
-        // Si se borra, recargamos la lista
-        fetchProducts(); 
-
+        if (!response.ok) throw new Error('No se pudo borrar el producto.');
+        fetchProducts();
         } catch (error) {
-        console.error("Error al borrar:", error);
         alert(error.message);
         } finally {
         setLoading(false);
         }
     };
     
-    // --- FUNCIÓN DE CREACIÓN (POST) ---
+    // --- FUNCIÓN DE ENVÍO (ACTUALIZADA) ---
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const newProduct = {
-        nombre,
-        descripcion,
-        precio: parseFloat(precio),
-        stock: parseInt(stock),
-        category,
-        imageUrl1,
-        // Los demás campos (rating, reviews, etc.) usarán los defaults
-        // que definimos en el modelo de C#
+        // Junta el ID (si existe) con los datos del formulario
+        const productData = {
+        ...formState,
+        id: editingId, // Será null si es nuevo, o un ID si se edita
+        precio: parseFloat(formState.precio),
+        stock: parseInt(formState.stock),
+        rating: parseFloat(formState.rating),
+        reviews: parseInt(formState.reviews)
         };
+
+        const method = editingId ? 'PUT' : 'POST';
+        const url = editingId ? `${API_URL}/${editingId}` : API_URL;
 
         setLoading(true);
         try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
+        const response = await fetch(url, {
+            method: method,
             headers: {
             'Content-Type': 'application/json',
-            // ¡CRUCIAL! Esto le dice al backend que eres un Admin
             'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify(newProduct)
+            body: JSON.stringify(productData)
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            console.error("Error del servidor:", errorData);
-            throw new Error('No se pudo crear el producto. ¿Tienes permisos de Admin?');
+            throw new Error(`No se pudo ${editingId ? 'actualizar' : 'crear'} el producto.`);
         }
 
-        // Si se crea, limpiamos el formulario y recargamos la lista
-        fetchProducts();
-        setNombre('');
-        setDescripcion('');
-        setPrecio(0);
+        fetchProducts(); // Recargar la lista
+        cancelEdit(); // Limpiar el formulario y salir del modo edición
 
         } catch (error) {
-        console.error("Error al crear:", error);
         alert(error.message);
         } finally {
         setLoading(false);
         }
     };
 
+    // Pequeña función para manejar los cambios del formulario
+    const handleFormChange = (e) => {
+        const { name, value } = e.target;
+        setFormState(prevState => ({
+        ...prevState,
+        [name]: value
+        }));
+    };
+
     return (
         <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
         <h1 className="text-3xl font-bold text-center">Panel de Administración</h1>
         
-        {/* --- FORMULARIO DE CREAR PRODUCTO --- */}
+        {/* --- FORMULARIO DE CREAR/EDITAR PRODUCTO --- */}
         <Card className={`${darkMode ? "bg-slate-900" : "bg-gray-50"}`}>
             <CardHeader>
-            <CardTitle>Añadir Nuevo Producto</CardTitle>
+            {/* Título dinámico */}
+            <CardTitle>{editingId ? `Editando Producto (ID: ${editingId})` : 'Añadir Nuevo Producto'}</CardTitle>
             </CardHeader>
             <CardContent>
+            {/* El 'name' en cada input es crucial para 'handleFormChange' */}
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Columna 1 */}
                 <div className="space-y-2">
                 <div>
                     <label className="text-sm font-medium">Nombre</label>
-                    <input 
-                    type="text" 
-                    value={nombre} 
-                    onChange={(e) => setNombre(e.target.value)} 
-                    className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} 
-                    required 
-                    />
+                    <input name="nombre" type="text" value={formState.nombre} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} required />
                 </div>
                 <div>
                     <label className="text-sm font-medium">Descripción</label>
-                    <textarea 
-                    value={descripcion} 
-                    onChange={(e) => setDescripcion(e.target.value)} 
-                    className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} 
-                    />
+                    <textarea name="descripcion" value={formState.descripcion} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} />
                 </div>
                 </div>
                 {/* Columna 2 */}
                 <div className="space-y-2">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                     <div>
                     <label className="text-sm font-medium">Precio</label>
-                    <input 
-                        type="number" 
-                        value={precio} 
-                        onChange={(e) => setPrecio(e.target.value)} 
-                        className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} 
-                        required 
-                    />
+                    <input name="precio" type="number" value={formState.precio} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} required />
                     </div>
                     <div>
                     <label className="text-sm font-medium">Stock</label>
-                    <input 
-                        type="number" 
-                        value={stock} 
-                        onChange={(e) => setStock(e.target.value)} 
-                        className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} 
-                        required 
-                    />
+                    <input name="stock" type="number" value={formState.stock} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} required />
+                    </div>
+                    <div>
+                    <label className="text-sm font-medium">Categoría</label>
+                    <input name="category" type="text" value={formState.category} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} />
+                    </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                    <div>
+                    <label className="text-sm font-medium">Rating</label>
+                    <input name="rating" type="number" step="0.1" value={formState.rating} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} />
+                    </div>
+                    <div>
+                    <label className="text-sm font-medium">Reviews</label>
+                    <input name="reviews" type="number" value={formState.reviews} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} />
                     </div>
                 </div>
                 <div>
-                    <label className="text-sm font-medium">Categoría</label>
-                    <input 
-                    type="text" 
-                    value={category} 
-                    onChange={(e) => setCategory(e.target.value)} 
-                    className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} 
-                    />
+                    <label className="text-sm font-medium">URL Imagen 1</label>
+                    <input name="imageUrl1" type="text" value={formState.imageUrl1} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} />
                 </div>
                 <div>
-                    <label className="text-sm font-medium">URL de Imagen 1</label>
-                    <input 
-                    type="text" 
-                    value={imageUrl1} 
-                    onChange={(e) => setImageUrl1(e.target.value)} 
-                    className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} 
-                    />
+                    <label className="text-sm font-medium">URL Imagen 2</label>
+                    <input name="imageUrl2" type="text" value={formState.imageUrl2} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} />
+                </div>
+                <div>
+                    <label className="text-sm font-medium">URL Imagen 3</label>
+                    <input name="imageUrl3" type="text" value={formState.imageUrl3} onChange={handleFormChange} className={`w-full p-2 border rounded ${darkMode ? "bg-slate-800 border-slate-700" : "bg-white"}`} />
                 </div>
                 </div>
-                {/* Botón de envío */}
-                <div className="md:col-span-2">
-                <Button type="submit" disabled={loading} className="w-full bg-yellow-500 dark:bg-red-800 text-black dark:text-white">
-                    {loading ? "Creando..." : "Crear Producto"}
+                {/* Botones de envío */}
+                <div className="md:col-span-2 flex gap-4">
+                <Button type="submit" disabled={loading} className="flex-1 bg-yellow-500 dark:bg-red-800 text-black dark:text-white">
+                    {loading ? (editingId ? 'Actualizando...' : 'Creando...') : (editingId ? 'Actualizar Producto' : 'Crear Producto')}
                 </Button>
+                {/* Botón de Cancelar (solo se muestra si estamos editando) */}
+                {editingId && (
+                    <Button type="button" variant="outline" onClick={cancelEdit} className="flex-1">
+                    Cancelar Edición
+                    </Button>
+                )}
                 </div>
             </form>
             </CardContent>
         </Card>
         
-        {/* --- LISTA DE PRODUCTOS PARA BORRAR --- */}
+        {/* --- LISTA DE PRODUCTOS (CON BOTÓN EDITAR) --- */}
         <Card className={`${darkMode ? "bg-slate-900" : "bg-gray-50"}`}>
             <CardHeader>
-            <CardTitle>Eliminar Productos</CardTitle>
+            <CardTitle>Administrar Productos</CardTitle>
             </CardHeader>
             <CardContent>
             <div className="space-y-2">
@@ -213,14 +234,25 @@ export const AdminPanel = ({ darkMode }) => {
                     <span className="font-bold">{product.nombre}</span>
                     <span className="text-sm text-gray-500 ml-2">(ID: {product.id})</span>
                     </div>
+                    <div className="flex gap-2">
+                    {/* --- NUEVO BOTÓN DE EDITAR --- */}
                     <Button 
-                    variant="destructive" 
-                    size="sm" 
-                    onClick={() => handleDelete(product.id)}
-                    disabled={loading}
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => handleEditClick(product)}
+                        disabled={loading}
                     >
-                    <Trash2 className="w-4 h-4" />
+                        <Edit className="w-4 h-4" />
                     </Button>
+                    <Button 
+                        variant="destructive" 
+                        size="sm" 
+                        onClick={() => handleDelete(product.id)}
+                        disabled={loading}
+                    >
+                        <Trash2 className="w-4 h-4" />
+                    </Button>
+                    </div>
                 </div>
                 ))}
             </div>
