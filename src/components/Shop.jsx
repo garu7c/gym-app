@@ -210,9 +210,9 @@ export default function Shop({ darkMode, texts }) {
                       {product.category}
                     </Badge>
 
-                    <CardTitle className="text-lg">{product.name}</CardTitle>
+                    <CardTitle className="text-lg">{product.nombre}</CardTitle>
                     <CardDescription className="text-sm">
-                      {product.description}
+                      {product.descripcion}
                     </CardDescription>
 
                     <div className="flex items-center space-x-2">
@@ -236,7 +236,7 @@ export default function Shop({ darkMode, texts }) {
                     <div className="flex items-center justify-between pt-2">
                       <div>
                         <span className={`${darkMode ? "text-2xl font-bold text-red-900" : "text-2xl font-bold text-yellow-600"} `}>
-                          ₡{formatPrice(product.price)}
+                          ₡{formatPrice(product.precio)}
                         </span>
                       </div>
                       <Button
