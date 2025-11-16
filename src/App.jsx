@@ -1,6 +1,5 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
-  Menu,
   Home as HomeIcon,
   ShoppingCart,
   Dumbbell,
@@ -17,11 +16,9 @@ import Shop from "./components/Shop";
 import Help from "./components/Help";
 import Find from "./components/Find";
 import { PrivateRoute } from "./components/PrivateRoute";
-import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContexts";
 import LoginModal from "./components/LoginModal";
 import ProfileModal from "./components/ProfileModal";
-
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
@@ -41,38 +38,37 @@ export default function App() {
   const [lang, setLang] = useState("es");
   const currentTexts = texts[lang] || {};
 
-  // App.jsx - CORRECTION
+  //  Carga de textos
   useEffect(() => {
     fetch("/texts.json")
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
-        // PASO CRUCIAL: Usar res.json() para parsear la respuesta
         return res.json(); 
       })
       .then(data => {
-        // Almacenar el JSON completo en el estado 'texts'
         setTexts(data); 
         console.log("Textos cargados correctamente.");
       })
       .catch(error => {
         console.error("Error al cargar o parsear texts.json:", error);
       });
-  }, []); // El array de dependencias vacío indica que se ejecuta solo al montar el componente
-
+  }, []);
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   
-   useEffect(() => {
+  // Persistencia de imagen de usuario
+  useEffect(() => {
     if (userImage) {
       localStorage.setItem("userImage", userImage);
     } else {
       localStorage.removeItem("userImage");
     }
   }, [userImage]);
-//Cambiar los label con los textos del JSON
+
+  // Configuración de pestañas
   const tabs = [
     { id: "home", label: currentTexts.inicio , icon: <HomeIcon className="w-4 h-4" /> },
     { id: "store", label: currentTexts.tienda, icon: <ShoppingCart className="w-4 h-4" /> },
@@ -81,6 +77,7 @@ export default function App() {
     { id: "help", label: currentTexts.ayuda, icon: <HelpCircle className="w-4 h-4" /> },
   ];
 
+  // Toggle dark/light mode
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -153,7 +150,6 @@ export default function App() {
                   />
                 ) : (
                   <div className="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center">
-                    {/* Ícono de usuario cuando no hay imagen */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5 text-white"

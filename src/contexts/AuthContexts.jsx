@@ -1,8 +1,7 @@
-// src/contexts/AuthContexts.jsx (¡NUEVO CÓDIGO!)
+// src/contexts/AuthContexts.jsx (ACTUALIZADO CON NOTIFICACIONES)
 import { createContext, useContext, useState, useEffect } from "react";
 
 // 1. Función para decodificar el JWT (simplificada)
-// En una app real, usarías una librería como 'jwt-decode'
 function decodeJwt(token) {
   try {
     const base64Url = token.split('.')[1];
@@ -28,6 +27,43 @@ function decodeJwt(token) {
   }
 }
 
+// Función para enviar notificación de login
+const sendLoginNotification = async (userEmail) => {
+  try {
+    const serviceUrl = 'http://localhost:8081/api/notifications/login';
+    
+    console.log('Enviando notificación de login a:', userEmail);
+    
+    // No usar await - no bloquear el login
+    fetch(serviceUrl, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        userEmail: userEmail,
+        source: 'jaguar_fitness_web',
+        timestamp: new Date().toISOString()
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(message => {
+      console.log('🔔 Notificación exitosa:', message);
+    })
+    .catch(error => {
+      // Error silencioso - no afectar UX
+      console.log('⚠️ Servicio de notificaciones no disponible:', error.message);
+    });
+    
+  } catch (error) {
+    console.log('⚠️ Error enviando notificación:', error);
+  }
+};
 
 export const AuthContext = createContext();
 
@@ -36,23 +72,35 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem("jwtToken"));
   const [user, setUser] = useState(null);
+  
+  // Referencia para evitar notificaciones duplicadas
+  const [previousUser, setPreviousUser] = useState(null);
 
   // 2. Efecto para cargar el usuario si el token ya existe
   useEffect(() => {
     if (token) {
       const decodedUser = decodeJwt(token);
       setUser(decodedUser);
-      // Aquí es donde configurarías el 'Authorization' header para todos los fetch
-      // (si usaras una librería como 'axios')
+      
+      // Enviar notificación cuando se detecta un nuevo usuario
+      if (decodedUser && decodedUser !== previousUser) {
+        console.log('Usuario autenticado, enviando notificación...');
+        sendLoginNotification(decodedUser.email);
+        setPreviousUser(decodedUser);
+      }
     } else {
       setUser(null);
+      setPreviousUser(null);
     }
-  }, [token]);
+  }, [token, previousUser]);
 
   // 3. Función de Login: se llamará desde LoginModal
   const login = (jwtToken) => {
     localStorage.setItem("jwtToken", jwtToken);
     setToken(jwtToken);
+    
+    //La notificación se maneja en el useEffect arriba
+    // para cubrir tanto login nuevo como recarga de página con token existente
   };
 
   // 4. Función de Logout: se llamará desde ProfileModal
@@ -60,6 +108,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("jwtToken");
     setToken(null);
     setUser(null);
+    setPreviousUser(null); // Resetear referencia
     window.location.href = "/"; // Forzar recarga al inicio
   };
 
