@@ -19,6 +19,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import { AuthContext } from "./contexts/AuthContexts";
 import LoginModal from "./components/LoginModal";
 import ProfileModal from "./components/ProfileModal";
+import { CartModal } from "./components/CartModal";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
@@ -29,6 +30,7 @@ export default function App() {
   });
 
   const { user } = useContext(AuthContext);
+  const { cartItems } = useCart();
 
   const [userImage, setUserImage] = useState(() => {
     return localStorage.getItem("userImage") || null;
@@ -58,6 +60,7 @@ export default function App() {
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   
   // Persistencia de imagen de usuario
   useEffect(() => {
@@ -129,6 +132,24 @@ export default function App() {
                 <Sun className="w-5 h-5 text-white" />
               ) : (
                 <Moon className="w-5 h-5 text-black" />
+              )}
+            </button>
+
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className={`relative p-2 rounded-full transition ${
+                darkMode
+                  ? "bg-red-800 hover:bg-red-700"
+                  : "bg-yellow-500 hover:bg-yellow-700"
+              }`}
+            >
+              <ShoppingCart className={`w-5 h-5 ${darkMode ? "text-white" : "text-black"}`} />
+              {cartItems.length > 0 && (
+                <span className={`absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-xs font-bold ${
+                  darkMode ? "bg-white text-red-900" : "bg-black text-white"
+                }`}>
+                  {cartItems.length}
+                </span>
               )}
             </button>
 
@@ -264,6 +285,11 @@ export default function App() {
         darkMode={darkMode}
         userImage={userImage}
         onUpdateImage={setUserImage}
+      />
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        darkMode={darkMode}
       />
     </div>
   );

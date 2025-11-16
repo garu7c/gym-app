@@ -1,8 +1,9 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useContext } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { ShoppingCart, Star, Filter } from "lucide-react";
+
 
 /* =====================
   Componente Carrusel
@@ -82,9 +83,9 @@ function ProductCarousel({ images = [], alt, grid = false }) {
   ===================== */
 export default function Shop({ darkMode, texts }) {
   const [products, setProducts] = useState([]); // Ahora solo guarda los 6 de la página actual
-  const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { cartItems, addToCart } = useCart();
 
   // --- ESTADOS DE PAGINACIÓN ---
   const [page, setPage] = useState(1);
@@ -127,7 +128,6 @@ export default function Shop({ darkMode, texts }) {
   // 'currentProducts' ahora es solo 'products'
   const currentProducts = products;
 
-  const addToCart = (productId) => setCart((prev) => [...prev, productId]);
   const formatPrice = (p) => p.toFixed(2);
 
   const goToPage = (n) => {
@@ -154,7 +154,19 @@ export default function Shop({ darkMode, texts }) {
         <>
           {/* Info carrito y paginación (Actualizado) */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            {/* ... (código del carrito sin cambios) ... */}
+            <div>
+              {cartItems.length > 0 ? (
+                <div className="inline-flex items-center space-x-3 bg-green-50 border border-green-200 p-3 rounded-lg">
+                  <ShoppingCart className="w-5 h-5 text-green-600" />
+                  <span>
+                    Tienes {cartItems.length} producto
+                    {cartItems.length > 1 ? "s" : ""} en tu carrito
+                  </span>
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground">{texts.emptyCart}</div>
+              )}
+            </div>
 
             <div className="flex items-center space-x-4">
               <div className="text-sm text-muted-foreground">
@@ -230,7 +242,7 @@ export default function Shop({ darkMode, texts }) {
                         </span>
                       </div>
                       <Button
-                        onClick={() => addToCart(product.id)}
+                        onClick={() => addToCart(product)}
                         className={`${darkMode ? "bg-red-800 hover:bg-gray-700 text-white" : "bg-yellow-500 hover:bg-yellow-600 text-black"}`}
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
