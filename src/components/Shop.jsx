@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { ShoppingCart, Star, Filter } from "lucide-react";
-import { useCart } from "./contexts/CartContext";
+import { useCart } from "../contexts/CartContext";
 
 /* =====================
   Componente Carrusel
