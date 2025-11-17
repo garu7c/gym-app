@@ -29,7 +29,7 @@ function decodeJwt(token) {
 // 2. Función para enviar notificación (sin cambios)
 const sendLoginNotification = async (userEmail) => {
   try {
-    const APIM_BASE_URL = 'https://<TU_APIM_GATEWAY>/notifications-ms';
+    const APIM_BASE_URL = 'https://cla-royale.azure-api.net/notifications-ms';
     const serviceUrl = `${APIM_BASE_URL}/api/notifications/login`;
     
     console.log('Enviando notificación de login a:', userEmail);

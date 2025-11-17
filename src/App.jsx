@@ -24,6 +24,7 @@ import { useCart } from "./contexts/CartContext";
 import { InfoModal } from "./components/InfoModal";
 import { RequiresLoginBox } from "./components/RequiresLoginBox";
 import { AdminPanel } from "./components/AdminPanel";
+import { NotificationReceiver } from "./components/NotificationReceiver";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
@@ -304,6 +305,7 @@ export default function App() {
         onClose={() => setIsCartOpen(false)}
         darkMode={darkMode}
       />
+      <NotificationReceiver setInfoModalState={setInfoModalState} />
       <InfoModal
         isOpen={infoModalState.isOpen}
         onClose={closeInfoModal}
