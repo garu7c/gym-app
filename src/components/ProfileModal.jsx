@@ -25,7 +25,7 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdat
   };
 
   const handleLogout = () => {
-    lwindow.location.href = "/.auth/logout";
+    window.location.href = "/.auth/logout";
   };
 
   if (!isOpen) return null;
