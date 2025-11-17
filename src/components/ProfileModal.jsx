@@ -61,7 +61,7 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode, userIma
         </div>
 
         {/* Botón Cerrar Sesión (con el onClick correcto) */}
-        <button onClick={handleLogout} className={`w-full px-4 py-2 rounded-lg font-semibold shadow ${darkMode ? "bg-black hover:bg-gray-700" : "bg-gray-200 hover:bg-gray-300 text-black"}`}>
+        <button onClick={handleLogout} className={`w-full px-4 py-2 rounded-lg font-semibold shadow ${darkMode ? "bg-gray-950 hover:bg-gray-700" : "bg-gray-200 hover:bg-gray-300 text-black"}`}>
           Cerrar Sesión
         </button>
       </div>
