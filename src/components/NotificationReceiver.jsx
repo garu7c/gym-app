@@ -1,68 +1,81 @@
 // src/components/NotificationReceiver.jsx
 
-import React, { useEffect, useState } from 'react';
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContexts'; // Importa tu contexto de autenticación
 
+// 🛑 CONFIGURACIÓN CLAVE DE AZURE APIM
+const APIM_BASE_URL = 'https://cla-royale.azure-api.net/notifications-ms';
+const APIM_SUBSCRIPTION_KEY = '6b194d73d19340beb3003faec661dac5'; 
+// Usamos el email del usuario como identificador de sesión para el polling
 
-const APIM_GATEWAY_BASE = 'https://cla-royale.azure-api.net/notifications-ms';
-// El endpoint WebSocket configurado en Spring Boot (WebSocketConfig.java)
-const WS_ENDPOINT = '/ws/notifications';
-const APIM_SUBSCRIPTION_KEY = '6b194d73d19340beb3003faec661dac5';
-const socketUrl = `${APIM_GATEWAY_BASE}${WS_ENDPOINT}?subscription-key=${APIM_SUBSCRIPTION_KEY}`;
+const pollNotifications = (userEmail, setInfoModalState) => {
+    
+    // Si el usuario no está logueado o el email es nulo, no hacemos polling.
+    if (!userEmail) {
+        // Retrasamos el reintento para evitar inundar la consola si el usuario se acaba de desloguear
+        setTimeout(() => pollNotifications(userEmail, setInfoModalState), 5000); 
+        return; 
+    }
+
+    const url = `${APIM_BASE_URL}/api/notifications/poll/${userEmail}`;
+    const headers = { 
+        'Ocp-Apim-Subscription-Key': APIM_SUBSCRIPTION_KEY // Clave APIM
+    };
+
+    console.log(`Polling iniciado para ${userEmail}. URL: ${url}`);
+
+    fetch(url, { headers })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            }
+            // Si hay error (ej. 404), tiramos un error
+            throw new Error(`Fallo en el polling, código: ${response.status}`);
+        })
+        .then(payload => {
+            if (payload !== "TIMEOUT") {
+                // ✅ Notificación recibida! (El servidor respondió con datos)
+                console.log('🔔 Notificación de Compra Recibida:', payload);
+                setInfoModalState({
+                    isOpen: true,
+                    title: '🛍️ ¡Nueva Compra!',
+                    message: payload
+                });
+            } else {
+                // Timeout normal, el servidor no tenía datos, volvemos a intentarlo inmediatamente
+                console.log('Polling: Timeout (no hay nuevos datos), reintentando...');
+            }
+        })
+        .catch(error => {
+            console.error('❌ Error de Long Polling:', error.message);
+            // Si falla por red (ej. desconexión), esperamos un poco antes de reintentar
+            // Esto es crucial para no bloquear el navegador en caso de error 401 o 404
+            setTimeout(() => pollNotifications(userEmail, setInfoModalState), 5000);
+            return;
+        })
+        .finally(() => {
+            // Importante: Si la petición fue exitosa (TIMEOUT o dato), iniciar la siguiente inmediatamente
+            pollNotifications(userEmail, setInfoModalState); 
+        });
+};
+
 
 export const NotificationReceiver = ({ setInfoModalState }) => {
-    
-    // Estado para guardar la última notificación (opcional)
-    const [lastNotification, setLastNotification] = useState(null); 
-    
+    // Usamos el contexto para obtener el usuario
+    const { user } = useContext(AuthContext); 
+    const userEmail = user?.userDetails; // Captura el email si está logueado
+
     useEffect(() => {
-        let stompClient = null;
+        // Esta función se ejecuta CADA VEZ que el estado del usuario cambia (login/logout)
+        // Esto reinicia el polling con el email correcto o lo detiene si no hay usuario.
+        pollNotifications(userEmail, setInfoModalState);
+        
+        // No necesitamos una función de cleanup explícita para detener el loop, 
+        // ya que el `if (!userEmail)` y el `setTimeout` manejan la recursividad.
+        // Sin embargo, en un entorno real, se podría usar una referencia para detener la cola de setTimeout.
+        
+        return () => {};
+    }, [userEmail, setInfoModalState]);
 
-        try {
-            // URL completa para la conexión WebSocket (usando WSS para seguridad)
-            const socket = new SockJS(socketUrl);
-            stompClient = Stomp.over(socket);
-            stompClient.debug = null; // Desactiva los logs detallados de STOMP
-
-            // Conexión al servidor WebSocket/STOMP
-            stompClient.connect({}, (frame) => {
-                console.log('✅ WebSocket: Conectado vía APIM.', frame);
-
-                // Suscripción al tópico donde el backend envía las órdenes
-                // Esto coincide con 'config.enableSimpleBroker("/topic")' y 'messagingTemplate.convertAndSend("/topic/orders", payload)'
-                stompClient.subscribe('/topic/orders', (message) => {
-                    const payload = message.body;
-                    console.log('🔔 Notificación de Compra Recibida:', payload);
-                    
-                    // Actualiza el estado local y muestra un modal (usando el prop pasado desde App.jsx)
-                    setLastNotification(payload); 
-                    if (setInfoModalState) {
-                        setInfoModalState({
-                            isOpen: true,
-                            title: '🛍️ ¡Nueva Compra!',
-                            message: payload
-                        });
-                    }
-                });
-
-            }, (error) => {
-                console.error('❌ WebSocket: Error de conexión o APIM:', error.headers.message || error);
-            });
-
-        } catch (e) {
-            console.error('❌ WebSocket: Error al inicializar:', e);
-        }
-
-        // Cleanup: Desconexión al desmontar el componente (importante)
-        return () => {
-            if (stompClient && stompClient.connected) {
-                stompClient.disconnect(() => {
-                    console.log('🔌 WebSocket desconectado.');
-                });
-            }
-        };
-    }, [setInfoModalState]); // Se vuelve a ejecutar si el estado del modal cambia.
-
-    return null; // Este componente no renderiza nada visible, solo maneja la conexión.
+    return null; // Este componente es invisible, solo maneja la lógica de fondo
 };
