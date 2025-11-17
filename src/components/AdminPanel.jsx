@@ -31,11 +31,28 @@ export const AdminPanel = ({ darkMode }) => {
 
     const fetchProducts = async () => {
         try {
-        const res = await fetch(API_URL);
+        // 🛑 ESTA ES LA LÍNEA INCORRECTA:
+        // const res = await fetch(API_URL);
+        // const data = await res.json();
+        // setProducts(data); // <-- Esto es el bug
+
+        // ✅ ESTAS SON LAS LÍNEAS CORRECTAS:
+        // Pedimos la página 1 con un límite muy alto para verlos TODOS
+        const res = await fetch(`${API_URL}?page=1&pageSize=999`);
+        if (!res.ok) throw new Error("Error en el fetch de admin");
+        
         const data = await res.json();
-        setProducts(data);
+        
+        // La API devuelve { items: [...] }
+        if (data && data.items) {
+            setProducts(data.items); // <-- Guardamos el array 'items'
+        } else {
+            setProducts([]); // Fallback
+        }
+
         } catch (error) {
-        console.error("Error cargando productos:", error);
+        console.error("Error cargando productos en Admin:", error);
+        setProducts([]); // Evita el crash si falla
         }
     };
 
