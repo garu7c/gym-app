@@ -17,7 +17,7 @@ const pollNotifications = (userEmail, setInfoModalState) => {
         return; 
     }
 
-    const url = `${APIM_BASE_URL}/api/notifications/poll/${userEmail}`;
+    const url = `${APIM_BASE_URL}/api/notifications/poll`;
     const headers = { 
         'Ocp-Apim-Subscription-Key': APIM_SUBSCRIPTION_KEY // Clave APIM
     };
