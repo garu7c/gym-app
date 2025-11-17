@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
-// ** 🛑 IMPORTANTE: CONFIGURAR LA URL DE AZURE APIM **
-// Debe usar HTTPS/WSS y el sufijo de API que configuraste.
-const APIM_GATEWAY_BASE = 'https://<TU_APIM_GATEWAY>/notifications-ms';
 
+const APIM_GATEWAY_BASE = 'https://cla-royale.azure-api.net/notifications-ms';
 // El endpoint WebSocket configurado en Spring Boot (WebSocketConfig.java)
 const WS_ENDPOINT = '/ws/notifications';
+const APIM_SUBSCRIPTION_KEY = '6b194d73d19340beb3003faec661dac5';
+const socketUrl = `${APIM_GATEWAY_BASE}${WS_ENDPOINT}?subscription-key=${APIM_SUBSCRIPTION_KEY}`;
 
 export const NotificationReceiver = ({ setInfoModalState }) => {
     
@@ -21,7 +21,6 @@ export const NotificationReceiver = ({ setInfoModalState }) => {
 
         try {
             // URL completa para la conexión WebSocket (usando WSS para seguridad)
-            const socketUrl = `${APIM_GATEWAY_BASE}${WS_ENDPOINT}`;
             const socket = new SockJS(socketUrl);
             stompClient = Stomp.over(socket);
             stompClient.debug = null; // Desactiva los logs detallados de STOMP
