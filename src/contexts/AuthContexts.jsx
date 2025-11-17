@@ -31,12 +31,16 @@ const sendLoginNotification = async (userEmail) => {
   try {
     const APIM_BASE_URL = 'https://cla-royale.azure-api.net/notifications-ms';
     const serviceUrl = `${APIM_BASE_URL}/api/notifications/login`;
+    const APIM_SUBSCRIPTION_KEY = '6b194d73d19340beb3003faec661dac5';
     
     console.log('Enviando notificación de login a:', userEmail);
     
     fetch(serviceUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Ocp-Apim-Subscription-Key': APIM_SUBSCRIPTION_KEY
+      },
       body: JSON.stringify({ 
         userEmail: userEmail,
         source: 'jaguar_fitness_web',
