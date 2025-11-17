@@ -21,6 +21,8 @@ import LoginModal from "./components/LoginModal";
 import ProfileModal from "./components/ProfileModal";
 import { CartModal } from "./components/CartModal";
 import { useCart } from "./contexts/CartContext";
+import { InfoModal } from "./components/InfoModal";
+import { RequiresLoginBox } from "./components/RequiresLoginBox";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
@@ -62,6 +64,14 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [infoModalState, setInfoModalState] = useState({
+    isOpen: false,
+    title: '',
+    message: ''
+  });
+  const closeInfoModal = () => {
+    setInfoModalState({ isOpen: false, title: '', message: '' });
+  };
   
   // Persistencia de imagen de usuario
   useEffect(() => {
@@ -138,10 +148,10 @@ export default function App() {
 
             <button
               onClick={() => setIsCartOpen(true)}
-              className={`relative p-2 rounded-full transition ${
+              className={`relative p-2 rounded-full transition border-2 ${
                 darkMode
-                  ? "bg-red-800 hover:bg-red-700"
-                  : "bg-yellow-500 hover:bg-yellow-700"
+                  ? "bg-red-800 hover:bg-red-700 border-white"
+                  : "bg-yellow-500 hover:bg-yellow-700 border-black"
               }`}
             >
               <ShoppingCart className={`w-5 h-5 ${darkMode ? "text-white" : "text-black"}`} />
@@ -209,15 +219,22 @@ export default function App() {
       {/* Navigation */}
       <nav
         className={`border-4 ${
-          darkMode ? "border-gray-950 bg-gray-950" : " border-gray-200/50 bg-gray-200/50"
+          darkMode ? "border-gray-1000 bg-gray-1000" : " border-gray-200/50 bg-gray-200/50"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 flex space-x-2 justify-center overflow-x-auto scrollbar-hide py-2">
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center whitespace-nowrap space-x-2 px-5 py-3 ${
+              onClick={() => {
+                if (tab.id === 'routines' && !user) {
+                  // Si hacen clic en "Routines" Y NO están logueados
+                  setIsLoginOpen(true); // Abre el modal
+                }
+                // Siempre activa la pestaña (para que vean el mensaje)
+                setActiveTab(tab.id); 
+              }}
+              className={`rounded-lg flex items-center whitespace-nowrap space-x-2 px-5 py-3 ${
                 activeTab === tab.id
                   ? darkMode
                     ? "bg-red-900 text-white"
@@ -235,7 +252,7 @@ export default function App() {
           {user && user.role === 'Admin' && (
             <button
               onClick={() => setActiveTab('admin')}
-              className={`flex items-center whitespace-nowrap space-x-2 px-5 py-3 ${
+              className={`rounded-lg flex items-center whitespace-nowrap space-x-2 px-5 py-3 ${
                 activeTab === 'admin'
                   ? darkMode ? "bg-red-900 text-white" : "bg-black text-white"
                   : darkMode ? "hover:bg-red-900/50 text-white-200" : "hover:bg-gray-300 text-gray-700"
@@ -254,19 +271,13 @@ export default function App() {
         {activeTab === "store" &&
           <Shop darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "routines" &&
-        (user ? (
-          <Training darkMode={darkMode} texts={currentTexts} />
-        ) : (
-          // Usamos una función autoejecutable para hacer dos cosas:
-          (() => {
-            // 1. Abrir el modal de login si no está abierto ya
-            if (!isLoginOpen) setIsLoginOpen(true);
-
-            // 2. Mostrar el componente 'Home' en el área de contenido
-            //    en lugar del texto feo.
-            return <Home darkMode={darkMode} texts={currentTexts} />;
-          })()
-        ))}
+          (user ? (
+            <Training darkMode={darkMode} texts={currentTexts} />
+          ) : (
+            // Si el tab es 'routines' pero no hay usuario, muestra la caja.
+            // El modal ya se abrió (o se cerró) gracias al onClick de la nav.
+            <RequiresLoginBox darkMode={darkMode} />
+          ))}
         {activeTab === "branches" &&
           <Find darkMode={darkMode} texts={currentTexts} />}
         {activeTab === "help" && <Help darkMode={darkMode} texts={currentTexts} />}
@@ -290,6 +301,13 @@ export default function App() {
       <CartModal
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
+        darkMode={darkMode}
+      />
+      <InfoModal
+        isOpen={infoModalState.isOpen}
+        onClose={closeInfoModal}
+        title={infoModalState.title}
+        message={infoModalState.message}
         darkMode={darkMode}
       />
     </div>

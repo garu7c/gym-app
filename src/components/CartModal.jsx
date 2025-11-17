@@ -7,7 +7,7 @@ import { X, Trash2, ShoppingCart } from 'lucide-react';
 
 const formatPrice = (p) => p.toFixed(2);
 
-export const CartModal = ({ isOpen, onClose, darkMode }) => {
+export const CartModal = ({ isOpen, onClose, darkMode, onCheckoutSuccess }) => {
     const { cartItems, removeFromCart, clearCart } = useCart();
     const { token } = useContext(AuthContext); // 3. Obtener el token de autenticación
 
@@ -49,9 +49,11 @@ export const CartModal = ({ isOpen, onClose, darkMode }) => {
         }
 
         // Si todo sale bien...
-        alert("¡Pedido recibido! Se está procesando tu notificación.");
+        if (onCheckoutSuccess) {
+            onCheckoutSuccess("Tu pedido ha sido enviado a la cola. ¡Pronto recibirás una notificación!");
+        }
         clearCart(); // Limpia el carrito
-        onClose(); // Cierra el modal
+        onClose(); // Cierra el modal   
 
         } catch (error) {
         console.error("Error en el checkout:", error);
@@ -64,8 +66,9 @@ export const CartModal = ({ isOpen, onClose, darkMode }) => {
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 p-4">
         <div 
-            className={`relative w-full max-w-lg p-6 rounded-2xl shadow-xl ...`}
-            // ... (resto del JSX del modal sin cambios)
+            className={`relative w-full max-w-lg p-6 rounded-2xl shadow-xl transition-colors
+                ${darkMode ? "bg-red-900 text-white" : "bg-yellow-500 text-black"}
+            `}
         >
             {/* Encabezado y Botón de Cerrar */}
             <div className="flex items-center justify-between mb-4">

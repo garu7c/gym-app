@@ -10,18 +10,11 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdat
   const username = user?.email?.split("@")[0] || "Usuario";
   const fileInputRef = useRef();
 
-  useEffect(() => {
-    const savedImage = localStorage.getItem("userImage");
-    if (savedImage) setUserImage(savedImage);
-  }, []);
-
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
-      localStorage.setItem("userImage", reader.result);
-      setUserImage(reader.result);
       if (onUpdateImage) onUpdateImage(reader.result); // actualizar en App.jsx
     };
     reader.readAsDataURL(file);
@@ -32,8 +25,7 @@ export default function ProfileModal({ isOpen, onClose, email, darkMode, onUpdat
   };
 
   const handleLogout = () => {
-    logout();
-    onClose();
+    lwindow.location.href = "/.auth/logout";
   };
 
   if (!isOpen) return null;

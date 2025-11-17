@@ -153,21 +153,7 @@ export default function Shop({ darkMode, texts }) {
       {!loading && !error && (
         <>
           {/* Info carrito y paginación (Actualizado) */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              {cartItems.length > 0 ? (
-                <div className="inline-flex items-center space-x-3 bg-green-50 border border-green-200 p-3 rounded-lg">
-                  <ShoppingCart className="w-5 h-5 text-green-600" />
-                  <span>
-                    Tienes {cartItems.length} producto
-                    {cartItems.length > 1 ? "s" : ""} en tu carrito
-                  </span>
-                </div>
-              ) : (
-                <div className="text-sm text-muted-foreground">{texts.emptyCart}</div>
-              )}
-            </div>
-
+          <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-4">
             <div className="flex items-center space-x-4">
               <div className="text-sm text-muted-foreground">
                 {/* 4. Texto de paginación actualizado */}
