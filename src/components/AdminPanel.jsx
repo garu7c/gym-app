@@ -1,9 +1,8 @@
-// src/components/AdminPanel.jsx (ACTUALIZADO CON 'EDITAR')
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContexts';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Trash2, Edit } from 'lucide-react'; // Importar ícono de Editar
+import { Trash2, Edit } from 'lucide-react'; 
 
 const API_URL = "https://cla-royale.azure-api.net/api/productos";
 
@@ -11,9 +10,7 @@ export const AdminPanel = ({ darkMode }) => {
     const { token } = useContext(AuthContext);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
-
-    // --- NUEVO ESTADO ---
-    const [editingId, setEditingId] = useState(null); // null = Modo Crear, (numero) = Modo Editar
+    const [editingId, setEditingId] = useState(null); 
 
     // Estados para el formulario
     const [formState, setFormState] = useState({
@@ -21,38 +18,30 @@ export const AdminPanel = ({ darkMode }) => {
         descripcion: '',
         precio: 0,
         category: 'General',
-        stock: 100,
+        stock: 0,
         imageUrl1: '',
         imageUrl2: '',
         imageUrl3: '',
-        rating: 4.5, // Añadimos todos los campos del modelo
+        rating: 0, 
         reviews: 0
     });
 
     const fetchProducts = async () => {
         try {
-        // 🛑 ESTA ES LA LÍNEA INCORRECTA:
-        // const res = await fetch(API_URL);
-        // const data = await res.json();
-        // setProducts(data); // <-- Esto es el bug
-
-        // ✅ ESTAS SON LAS LÍNEAS CORRECTAS:
-        // Pedimos la página 1 con un límite muy alto para verlos TODOS
         const res = await fetch(`${API_URL}?page=1&pageSize=999`);
         if (!res.ok) throw new Error("Error en el fetch de admin");
         
         const data = await res.json();
-        
-        // La API devuelve { items: [...] }
+
         if (data && data.items) {
-            setProducts(data.items); // <-- Guardamos el array 'items'
+            setProducts(data.items); 
         } else {
-            setProducts([]); // Fallback
+            setProducts([]); 
         }
 
         } catch (error) {
         console.error("Error cargando productos en Admin:", error);
-        setProducts([]); // Evita el crash si falla
+        setProducts([]);
         }
     };
 
@@ -60,10 +49,9 @@ export const AdminPanel = ({ darkMode }) => {
         fetchProducts();
     }, []);
 
-    // --- NUEVA FUNCIÓN: Cargar datos para editar ---
+    // Cargar datos para editar
     const handleEditClick = (product) => {
-        setEditingId(product.id); // Pone el formulario en "Modo Editar"
-        // Rellena el formulario con los datos del producto
+        setEditingId(product.id);
         setFormState({
         nombre: product.nombre,
         descripcion: product.descripcion,
@@ -76,21 +64,20 @@ export const AdminPanel = ({ darkMode }) => {
         rating: product.rating,
         reviews: product.reviews
         });
-        window.scrollTo({ top: 0, behavior: "smooth" }); // Sube al formulario
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    // --- NUEVA FUNCIÓN: Cancelar Edición ---
+    // Cancelar Edición
     const cancelEdit = () => {
-        setEditingId(null); // Vuelve a "Modo Crear"
-        // Limpia el formulario
+        setEditingId(null);
         setFormState({
         nombre: '', descripcion: '', precio: 0, category: 'General',
-        stock: 100, imageUrl1: '', imageUrl2: '', imageUrl3: '',
-        rating: 4.5, reviews: 0
+        stock: 0, imageUrl1: '', imageUrl2: '', imageUrl3: '',
+        rating: 0, reviews: 0
         });
     };
 
-    // --- FUNCIÓN DE BORRADO (Sin cambios) ---
+    // Función de Borrado
     const handleDelete = async (id) => {
         if (!window.confirm(`¿Seguro que quieres borrar el producto ${id}?`)) return;
         setLoading(true);
@@ -108,14 +95,14 @@ export const AdminPanel = ({ darkMode }) => {
         }
     };
     
-    // --- FUNCIÓN DE ENVÍO (ACTUALIZADA) ---
+    // Función de Envío
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Junta el ID (si existe) con los datos del formulario
+        // Junta el ID si existe con los datos del formulario
         const productData = {
         ...formState,
-        id: editingId, // Será null si es nuevo, o un ID si se edita
+        id: editingId,
         precio: parseFloat(formState.precio),
         stock: parseInt(formState.stock),
         rating: parseFloat(formState.rating),
@@ -140,8 +127,8 @@ export const AdminPanel = ({ darkMode }) => {
             throw new Error(`No se pudo ${editingId ? 'actualizar' : 'crear'} el producto.`);
         }
 
-        fetchProducts(); // Recargar la lista
-        cancelEdit(); // Limpiar el formulario y salir del modo edición
+        fetchProducts(); 
+        cancelEdit(); 
 
         } catch (error) {
         alert(error.message);
@@ -150,7 +137,7 @@ export const AdminPanel = ({ darkMode }) => {
         }
     };
 
-    // Pequeña función para manejar los cambios del formulario
+    // Función para manejar los cambios del formulario
     const handleFormChange = (e) => {
         const { name, value } = e.target;
         setFormState(prevState => ({
@@ -163,14 +150,13 @@ export const AdminPanel = ({ darkMode }) => {
         <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
         <h1 className="text-3xl font-bold text-center">Panel de Administración</h1>
         
-        {/* --- FORMULARIO DE CREAR/EDITAR PRODUCTO --- */}
+        {/* Formulario para crear y editar los productos */}
         <Card className={`${darkMode ? "bg-slate-900" : "bg-gray-50"}`}>
             <CardHeader>
-            {/* Título dinámico */}
             <CardTitle>{editingId ? `Editando Producto (ID: ${editingId})` : 'Añadir Nuevo Producto'}</CardTitle>
             </CardHeader>
             <CardContent>
-            {/* El 'name' en cada input es crucial para 'handleFormChange' */}
+
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Columna 1 */}
                 <div className="space-y-2">
@@ -227,7 +213,7 @@ export const AdminPanel = ({ darkMode }) => {
                 <Button type="submit" disabled={loading} className="flex-1 bg-yellow-500 dark:bg-red-800 text-black dark:text-white">
                     {loading ? (editingId ? 'Actualizando...' : 'Creando...') : (editingId ? 'Actualizar Producto' : 'Crear Producto')}
                 </Button>
-                {/* Botón de Cancelar (solo se muestra si estamos editando) */}
+                {/* Botón de Cancelar */}
                 {editingId && (
                     <Button type="button" variant="outline" onClick={cancelEdit} className="flex-1">
                     Cancelar Edición
@@ -238,7 +224,7 @@ export const AdminPanel = ({ darkMode }) => {
             </CardContent>
         </Card>
         
-        {/* --- LISTA DE PRODUCTOS (CON BOTÓN EDITAR) --- */}
+        {/* Lista de productos con opción de editar */}
         <Card className={`${darkMode ? "bg-slate-900" : "bg-gray-50"}`}>
             <CardHeader>
             <CardTitle>Administrar Productos</CardTitle>
@@ -252,7 +238,6 @@ export const AdminPanel = ({ darkMode }) => {
                     <span className="text-sm text-gray-500 ml-2">(ID: {product.id})</span>
                     </div>
                     <div className="flex gap-2">
-                    {/* --- NUEVO BOTÓN DE EDITAR --- */}
                     <Button 
                         variant="outline" 
                         size="sm" 

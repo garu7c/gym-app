@@ -82,32 +82,29 @@ function ProductCarousel({ images = [], alt, grid = false }) {
   Componente Store
   ===================== */
 export default function Shop({ darkMode, texts }) {
-  const [products, setProducts] = useState([]); // Ahora solo guarda los 6 de la página actual
+  const [products, setProducts] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { cartItems, addToCart } = useCart();
 
-  // --- ESTADOS DE PAGINACIÓN ---
+  // Esatados de paginación
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
-  const [totalPages, setTotalPages] = useState(1); // El backend nos dirá el total
-  const [totalItems, setTotalItems] = useState(0); // El backend nos dirá el total
+  const [totalPages, setTotalPages] = useState(1); 
+  const [totalItems, setTotalItems] = useState(0); 
 
-  /* 🔹 Cargar productos desde Azure API (AHORA PAGINADO) */
+  /* Cargar productos desde Azure API */
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         setError(null);
-
-        // 1. Añadimos page y pageSize a la URL
         const res = await fetch(
           `https://cla-royale.azure-api.net/api/productos?page=${page}&pageSize=${pageSize}`
         ); 
         
         if (!res.ok) throw new Error(texts.errCrg);
-        
-        // 2. Leemos la nueva estructura de respuesta
+
         const data = await res.json();
         
         setProducts(data.items);       // Los productos de esta página
@@ -122,10 +119,8 @@ export default function Shop({ darkMode, texts }) {
     };
 
     fetchProducts();
-  }, [page, pageSize, texts.errCrg]); // 3. El useEffect se re-ejecuta si 'page' o 'pageSize' cambian
+  }, [page, pageSize, texts.errCrg]);
 
-  /* 🔹 useMemo y .slice() ELIMINADOS 🔹 */
-  // 'currentProducts' ahora es solo 'products'
   const currentProducts = products;
 
   const formatPrice = (p) => p.toFixed(2);

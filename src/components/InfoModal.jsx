@@ -1,4 +1,3 @@
-// src/components/InfoModal.jsx
 import React from 'react';
 import { Button } from './ui/button';
 import { X, CheckCircle } from 'lucide-react';

@@ -1,4 +1,3 @@
-// src/components/RequiresLoginBox.jsx
 import React from 'react';
 import { Lock } from 'lucide-react';
 
