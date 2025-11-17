@@ -23,6 +23,7 @@ import { CartModal } from "./components/CartModal";
 import { useCart } from "./contexts/CartContext";
 import { InfoModal } from "./components/InfoModal";
 import { RequiresLoginBox } from "./components/RequiresLoginBox";
+import { AdminPanel } from "./components/AdminPanel";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home"); 
