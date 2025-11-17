@@ -123,12 +123,12 @@ export const CartModal = ({ isOpen, onClose, darkMode, onCheckoutSuccess }) => {
                 </div>
                 
                 <div className="flex flex-col md:flex-row gap-2">
-                <Button variant="outline" onClick={clearCart} /* ... */>
+                <Button variant="destructive" onClick={clearCart} /* ... */>
                     Vaciar Carrito
                 </Button>
                 <Button 
                     onClick={handleCheckout} // <--- Esta función ahora llama al backend
-                    className={`flex-1 ${darkMode ? "bg-red-800 ..." : "bg-yellow-500 ..."}`}
+                    className={`flex-1 ${darkMode ? "bg-black hover:bg-gray-700" : "bg-yellow-500 hover:bg-yellow-600"} text-white dark:text-white`}
                 >
                     Proceder al Pago (Comprar)
                 </Button>

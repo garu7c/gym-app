@@ -220,7 +220,7 @@ export default function App() {
       {/* Navigation */}
       <nav
         className={`border-4 ${
-          darkMode ? "border-gray-1000 bg-gray-1000" : " border-gray-200/50 bg-gray-200/50"
+          darkMode ? "border-black bg-black" : " border-gray-200/50 bg-gray-200/50"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 flex space-x-2 justify-center overflow-x-auto scrollbar-hide py-2">
